@@ -1,8 +1,7 @@
-Lyon's Den
-===================
+Lyon's Den Remixed
+=================
 
-A 7-day Roguelike (7DRL) project. Don't expect much.
+Working title.
 
-Hit up http://7drl-lion.github.io/ to play.
-
-Uses rot.js.
+Remix of forked project, Lyon's Den, for GitHub Game Off 2015 "The
+Game Has Changed" - https://github.com/blog/1972-the-game-has-changed

@@ -18,6 +18,8 @@ class Attack extends Action
       @state.msg target_id, "#{_.str.capitalize(actor_short)} #{opts.flavor}s you!"
 
       @state.damage target_id, attack
+      
+      SoundEffects.get().play_hit();
 
       if @state.is_dead target_id
         @state.msg @id, "You killed #{target_short}!"

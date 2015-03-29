@@ -10,6 +10,8 @@
 #= require_tree actions
 #= require_tree skills
 
+#= require_tree sounds
+
 #= require_tree entities
 #= require_tree actors
 #= require_tree components

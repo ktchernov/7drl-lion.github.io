@@ -31,5 +31,8 @@ class GameOverPresenter
     @parent.html status
     $("#restart_link").click =>
       location.reload()
+    
+    
+    SoundEffects.get().play_death();
 
 root.GameOverPresenter = GameOverPresenter

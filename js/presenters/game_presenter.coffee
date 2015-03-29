@@ -5,6 +5,7 @@ class GamePresenter
     @map_presenter = new MapPresenter $('#map'), @game
     @help_presenter = new HelpPresenter $('#help'), @game
     @skills_presenter = new SkillsPresenter $('#skills'), @game
+    @points_presenter = new PointsPresenter $('#points'), @game
     @output_presenter = new OutputPresenter $('#output'), @game
     @status_presenter = new StatusPresenter $('#status'), @game
     @menu_presenter = new MenuPresenter $('#menu'), $('#menu_title'), $('#menu_content'), $('#menu_overlay'), @game
@@ -13,6 +14,7 @@ class GamePresenter
   update: ->
     @map_presenter.update()
     @skills_presenter.update()
+    @points_presenter.update()
     @output_presenter.update()
     @status_presenter.update()
     @menu_presenter.update()

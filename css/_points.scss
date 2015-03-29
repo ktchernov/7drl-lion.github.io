@@ -1,0 +1,25 @@
+#game .points {
+  @extend .section;
+
+  border-top: 1px solid $fg_color;
+  height: $points_height;
+  width: $game_width - $sidebar_width;
+  bottom: $bottombar_height;
+  left: 0px;
+  right: $sidebar_width;
+
+  .bar.hp {
+    .filled { color: #FF6600; }
+    .empty { color: #996600; }
+  }
+
+  .bar.mp {
+    .filled { color: #0066FF; }
+    .empty { color: #006699; }
+  }
+
+  .bar.xp {
+    .filled { color: #FF66FF; }
+    .empty { color: #996699; }
+  }
+}

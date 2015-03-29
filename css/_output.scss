@@ -8,12 +8,17 @@
 
   .content {
     height: 82px;
-    overflow: auto;
-    padding: 0px;
+    overflow: hidden;
+    padding: $hpadding 0px;
     width: 700px;
 
     .entry {
-      padding-left: $wpadding;
+      padding: $hpadding_small $wpadding;
+    }
+    
+    .oldEntry {
+      @extend .entry;
+      color: $fg_faded_color;
     }
   }
 }

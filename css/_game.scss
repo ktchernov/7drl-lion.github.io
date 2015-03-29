@@ -2,10 +2,12 @@ $game_width: 920px;
 $game_height: 470px;
 
 $sidebar_width: 220px;
-$bottombar_height: 127px;
+$bottombar_height: 110px;
 
-$status_height: 118px;
-$skills_height: 150px;
+$points_height: 25px;
+
+$status_height: 80px;
+$skills_height: 170px;
 $help_height: $game_height - $status_height - $skills_height;
 
 #game {
@@ -37,6 +39,7 @@ $help_height: $game_height - $status_height - $skills_height;
   .section {
     overflow: hidden;
     position: absolute;
+    font-size: 110%;
 
     .title {
       background-color: $bg_hi_color;

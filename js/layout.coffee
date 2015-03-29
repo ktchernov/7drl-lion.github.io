@@ -20,9 +20,16 @@ create_skills = ->
   $('<div/>', class: 'skills').append(title).append(content)
 
 create_output = ->
-  title = $('<div/>', class: 'title').html 'output'
   content = $('<div/>', id: 'output', class: 'content')
-  $('<div/>', class: 'output').append(title).append(content)
+  $('<div/>', class: 'output').append(content)
+
+create_output = ->
+  content = $('<div/>', id: 'output', class: 'content')
+  $('<div/>', class: 'output').append(content)
+
+create_points = ->
+  content = $('<div/>', id: 'points', class: 'content')
+  $('<div/>', class: 'points').append(content)
 
 create_menu = ->
   title = $('<div/>', id: 'menu_title', class: 'title').html ''
@@ -46,6 +53,7 @@ create_layout = ->
   $(game).append create_help()
   $(game).append create_skills()
   $(game).append create_output()
+  $(game).append create_points()
   $(game).append create_menu_overlay()
   $(game).append create_menu()
   $(game).append create_game_over()

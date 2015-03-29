@@ -5,7 +5,7 @@ FLOORS = 1
 WALLS = 2
 CREATURES = 3
 
-MAX_OUTPUT_LENGTH = 8
+MAX_OUTPUT_LENGTH = 7
 
 RIGHT = { n: 'ne', ne: 'e', e: 'se', se: 's', s: 'sw', sw: 'w', w: 'nw', nw: 'n' }
 LEFT = { n: 'nw', ne: 'n', e: 'ne', se: 'e', s: 'se', sw: 's', w: 'sw', nw: 'w' }

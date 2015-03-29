@@ -2,7 +2,7 @@ root = exports ? this
 
 class Game
   constructor: () ->
-    @state = new GameState 84, 24
+    @state = new GameState 80, 24
 
     @update_callbacks = []
 

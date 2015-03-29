@@ -4,6 +4,8 @@ class SkillsPresenter
   constructor: (@parent, @game) ->
     @skills = []
     @skill_costs = []
+    @lastNewSkill = 0
+    @lastNewSkillTime = 0
 
     $(10).times (i) =>
       cost = $('<span/>', class: 'cost')
@@ -31,12 +33,26 @@ class SkillsPresenter
       return
 
     skills = player.skills
+    
+    newSkillCount = skills.length
 
     $(10).times (i) =>
       skill = skills[i]
 
       if skill
         @skills[i].removeClass 'disabled'
+        if (i > @lastNewSkill)
+          @skills[i].addClass 'new'
+          nowTime = (new Date).getTime()
+          if (@lastNewSkillTime == 0)
+            @lastNewSkillTime = nowTime
+          
+          if (nowTime - @lastNewSkillTime > 1000 * 10)
+            @skills[i].removeClass 'new'
+            @lastNewSkillTime = 0
+            @lastNewSkill = skills.length
+            
+
         @skills[i].html skill.name
 
         if skill.mp > player.mp
@@ -51,14 +67,7 @@ class SkillsPresenter
         @skills[i].html 'none'
         @skill_costs[i].removeClass 'invalid'
         @skill_costs[i].html "0 mp"
+        
 
-  _present_skill: (player, key, skill) ->
-    unless skill
-      return "<span class='disabled'>#{key}: none</span>"
-
-    if skill.mp > player.mp
-      "<span class='disabled'>#{key}: #{skill.name}</span> (<span class='invalid'>#{skill.mp} mp</span>)"
-    else
-      "<b>#{key}</b>: <b>#{skill.name}</b> (#{skill.mp} mp)"
 
 root.SkillsPresenter = SkillsPresenter

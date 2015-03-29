@@ -14,5 +14,49 @@
 
   <body>
     <div id="game"></div>
+
+<audio id="testAudio" controls="controls" autoplay="autoplay">
+Your browser does not support the HTML5 Audio Tag.
+</audio>
+
+		<script type="text/javascript">
+			jQuery(function($) {
+				var supportsAudio = !!document.createElement('audio').canPlayType;
+				if(supportsAudio) {
+					var index = 0,
+					mediaPath = 'media/',
+					tracks = [
+						{"track":1, "file":"Rah Rah Rah.mp3"},
+                        {"track":2, "file":"Bonus Life.mp3"},
+					],
+					trackCount = tracks.length,
+					audio = $('#testAudio').bind('play', function() {
+						playing = true;
+					}).bind('pause', function() {
+						playing = false;
+					}).bind('ended', function() {
+						if((index + 1) < trackCount) {
+							index++;
+							loadTrack(index);
+							audio.play();
+						} else {
+							audio.pause();
+							index = 0;
+							loadTrack(index);
+						}
+                                           }).get(0),
+					loadTrack = function(id) {
+						$('.plSel').removeClass('plSel');
+						$('#plUL li:eq(' + id + ')').addClass('plSel');
+						index = id;
+						audio.src = mediaPath + tracks[id].file;
+					};
+
+                                        loadTrack(index);
+                                  }
+				});
+</script>
+
+
   </body>
 </html>

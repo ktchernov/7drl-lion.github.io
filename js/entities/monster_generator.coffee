@@ -13,6 +13,16 @@ class MonsterGenerator extends EntityGenerator
       when 'rare' then 0.4
 
     scaling_factor += scaling_factor * (floor - 1) * 0.2
+    
+    surge_grant_chance = switch rarity
+      when 'trash' then 0.12
+      when 'uncommon' then 0.4
+      when 'rare' then 1
+      
+    kill_xp = switch rarity
+      when 'trash' then 0.06
+      when 'uncommon' then 0.2
+      when 'rare' then 0.6
 
     base_attack = gender.base_attack + race.base_attack + klass.base_attack
     base_attack = Math.ceil(base_attack * scaling_factor)
@@ -42,5 +52,8 @@ class MonsterGenerator extends EntityGenerator
       dead: false
       rarity: rarity
       skills: [skill]
+      surge_grant_chance: surge_grant_chance
+      kill_score: scaling_factor * 100
+      kill_xp: kill_xp
 
 root.MonsterGenerator = MonsterGenerator

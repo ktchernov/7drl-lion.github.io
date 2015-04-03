@@ -36,6 +36,13 @@ class Entity
 
     @skills = []
     @_add_skills opts.skills
+    
+    @surge_grant_chance = opts.surge_grant_chance
+    @kill_score = opts.kill_score
+    @kill_xp = opts.kill_xp
+    
+    @score = 0
+
 
   pos: -> [@x, @y]
   set_pos: (@x, @y) ->

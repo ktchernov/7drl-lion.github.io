@@ -1,6 +1,8 @@
 root = exports ? this
 
 class GameOverPresenter
+  @HIGH_SCORE_COOKIE = "high_score"
+  
   constructor: (@parent, @overlay, @game) ->
 
   update: ->
@@ -15,9 +17,19 @@ class GameOverPresenter
 
     @parent.show()
     @overlay.show()
+    
+    prev_high_score = $.cookie GameOverPresenter.HIGH_SCORE_COOKIE
+    prev_high_score ?= 0
+    new_score = player.score
+    
+    if (prev_high_score < new_score)
+      prev_high_score = new_score
+      $.cookie(GameOverPresenter.HIGH_SCORE_COOKIE, new_score, {expires: 365 } )
 
-    status = "<div class='title'>REST IN PEACE</div>" +
+    status = "<div class='title'>REST IN PIECES</div>" +
     "<div class='content'>" +
+    "SCORE: <b>" + new_score + "</b><br/><br/>" +
+    "HIGHSCORE: <b>" + prev_high_score + "</b><br/><br/>" +
     "You were a <b>#{player.race.name} #{player.class.name}</b>.<br /><br />" +
     "Your corpse decorates Floor <b>#{state.floor}</b>.<br /><br />" +
     "You were level <b>#{player.level}</b>.<br />" +

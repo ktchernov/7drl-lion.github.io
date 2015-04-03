@@ -39,6 +39,8 @@ class GameState
   generate_monster: (rarity) ->
     monster = @_monster_generator.generate rarity, @floor
     @_add monster
+    monster
+    
 
   generate_cave: ->
     @clear_map()
@@ -307,6 +309,11 @@ class GameState
     if entity.xp >= 1
       entity.level_up()
       @msg id, "You leveled up!"
+      
+  grant_score: (id, amount) ->
+    entity = @_entities[id]
+    if entity
+      entity.score += amount
 
   # PRIVATE
 

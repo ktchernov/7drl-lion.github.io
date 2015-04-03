@@ -5,9 +5,8 @@ create_map = ->
   $('<div/>', class: 'map').append(content)
 
 create_status = ->
-  title = $('<div/>', class: 'title').html 'status'
   content = $('<div/>', id: 'status', class: 'content')
-  $('<div/>', class: 'status').append(title).append(content)
+  $('<div/>', class: 'status').append(content)
 
 create_help = ->
   title = $('<div/>', class: 'title').html 'help'

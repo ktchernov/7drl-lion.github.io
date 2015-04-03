@@ -1,8 +1,9 @@
 #game_over {
-  $w: 200;
-  $h: 150;
+  $w: $game_over_width;
+  $h: $game_over_height;
 
   border: 1px solid $fg_color;
+  font-size: 120%;
   background-color: $bg_color;
   @include dim($w, $h);
   @include center($w, $h, $game_width, $game_height);

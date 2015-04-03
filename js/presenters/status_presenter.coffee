@@ -5,12 +5,14 @@ class StatusPresenter
     @level = $('<span/>', id: 'level').append '0'
     @race = $('<span/>', id: 'race').append ''
     @class = $('<span/>', id: 'class').append 'unknown'
+      
+    @score = $("<span/>", id: 'score').html 0
 
-    @parent.append("Lvl ").append(@level).append(" ").append(@race).append(" ").append(@class).append("<br /><br />")
+    @parent.append("Lvl ").append(@level).append(" ").append(@race).append(" ").append(@class).append("<br/><br/>SCORE ").append(@score).append("<br/><br/>")
 
     @floor = $("<span/>", id: 'floor').html 0
     @enemies = $("<span/>", id: 'enemies').html 0
-    @parent.append("FLOOR ").append(@floor).append("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;enemies: ").append(@enemies)
+    @parent.append("FLOOR ").append(@floor).append("&nbsp;&nbsp;&nbsp;enemies: ").append(@enemies)
 
   update: ->
     state = @game.state
@@ -25,6 +27,7 @@ class StatusPresenter
 
     @floor.html state.floor
     @enemies.html state.monster_count()
+    @score.html player.score
 
   _nbsp_pad: (str, n) ->
     _.str.rpad(str, n, "&").replace(/&/g, "&nbsp;")

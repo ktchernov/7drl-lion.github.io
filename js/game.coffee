@@ -1,6 +1,9 @@
 root = exports ? this
 
 class Game
+  @KILL_ALL_SCORE: 100
+  @DESCEND_LEVEL_SCORE: 100
+  
   constructor: () ->
     @state = new GameState 80, 24
 
@@ -89,50 +92,49 @@ class Game
         if @state.exit_locked
           @state.msg @player_id, 'The exit is locked. You must find and defeat the boss of this level to proceed.'
         else
+          @_grant_score Game.DESCEND_LEVEL_SCORE
           @new_floor()
 
     @map_ready = true
     @update()
 
   _generate_trash: ->
-    id = @state.generate_monster 'trash'
-    @_make_actor id, =>
-      @_surge 0.12
-      @_grant_xp 0.06
-      @_check_full_surge()
-
+    monster_entity = @state.generate_monster 'trash'
+    @_make_actor monster_entity.id, =>
+      @_grant_kill_bonuses(monster_entity)
       @update()
 
     [x, y] = @state.random_empty_space()
-    @state.set_pos id, x, y
+    @state.set_pos monster_entity.id, x, y
 
   _generate_uncommon: ->
-    id = @state.generate_monster 'uncommon'
-    @_make_actor id, =>
-      @_surge 0.4
-      @_grant_xp 0.2
-      @_check_full_surge()
-
+    monster_entity = @state.generate_monster 'uncommon'
+    @_make_actor monster_entity.id, =>
+      @_grant_kill_bonuses(monster_entity)
       @update()
 
     [x, y] = @state.random_empty_space()
-    @state.set_pos id, x, y
+    @state.set_pos monster_entity.id, x, y
 
   _generate_boss: ->
-    id = @state.generate_monster 'rare'
-    @_make_actor id, =>
-      @_surge 1
-      @_grant_xp 1
-      @_check_full_surge()
+    monster_entity = @state.generate_monster 'rare'
+    @_make_actor monster_entity.id, =>
+      @_grant_kill_bonuses(monster_entity)
       @_grant_skill()
 
       @state.unlock_exit()
-      @state.msg @player_id, 'You hear a clicking sound in the distance. (You may now exit this floor.)'
+      @state.msg @player_id, 'You hear a loud CLANK in the distance. (Do you dare delve deeper?)'
 
       @update()
 
     [x, y] = @state.random_empty_space()
-    @state.set_pos id, x, y
+    @state.set_pos monster_entity.id, x, y
+    
+  _grant_kill_bonuses: (monster_entity) ->
+      @_surge monster_entity.surge_grant_chance
+      @_grant_score monster_entity.kill_score
+      @_grant_xp monster_entity.kill_xp
+      @_check_full_surge()
 
   _grant_skill: ->
     skills = @state.get_skills @player_id
@@ -166,6 +168,7 @@ class Game
     @_full_surge() if @state.monster_count() == 0
 
   _full_surge: ->
+    @_grant_score(Game.KILL_ALL_SCORE)
     @state.restore_hp @player_id, @state.get_max_hp @player_id
     @state.restore_mp @player_id, @state.get_max_mp @player_id
     @state.msg @player_id, 'With all the enemies vanquished, you are able to rest. Health and magic restored.'
@@ -180,6 +183,9 @@ class Game
 
   _grant_xp: (xp) ->
     @state.grant_xp @player_id, xp
+    
+  _grant_score: (score) ->
+    @state.grant_score @player_id, score
 
   _make_actor: (id, cb) ->
     cb ?= ->
@@ -189,10 +195,11 @@ class Game
     @scheduler.add monster_actor, true, 0
     @state.register_actor id, monster_actor
 
-    monster_actor.on_remove =>
+    monster_actor.on_remove =>    
       @scheduler.remove monster_actor
       @state.unregister_actor id
-
+      
       cb()
+
 
 root.Game = Game

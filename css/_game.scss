@@ -10,6 +10,9 @@ $status_height: 80px;
 $skills_height: 170px;
 $help_height: $game_height - $status_height - $skills_height;
 
+$game_over_height: 250;
+$game_over_width: 250;
+
 #game {
   background-color: $bg_color;
   border: 1px solid $fg_color;

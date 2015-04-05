@@ -28,7 +28,7 @@ class AggressiveMob extends Actor
 
         if path.length == 2
           dir = @state.general_direction @id, path[1]...
-          if Math.random() < 0.2
+          if ROT.RNG.getUniform() < 0.2
             @_use_skill dir
           else
             @_move_or_attack dir

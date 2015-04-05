@@ -12,7 +12,7 @@ $.fn.times_map = (fn) ->
 
 $.fn.random_element = (fn) ->
   ary = $(@)
-  idx = Math.floor(Math.random() * ary.length)
+  idx = ROT.RNG.getUniformInt(0, ary.length - 1)
   @[idx]
 
 $.fn.all = (cb) ->

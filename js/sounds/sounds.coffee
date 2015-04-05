@@ -62,7 +62,7 @@ class SoundEffects
       @effects.restore1.play()
       
     play_hit: ->  
-      percentile = Math.floor(Math.random() * 100)
+      percentile = ROT.RNG.getPercentage()
       if percentile < 25
         @effects.hit1.play()
       else if percentile < 50

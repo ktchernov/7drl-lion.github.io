@@ -294,6 +294,10 @@ class GameState
 
   restore_hp: (id, amount) ->
     entity = @_entities[id]
+    
+    if !entity
+      return
+    
     entity.hp += amount
 
     if entity.hp > entity.max_hp
@@ -303,6 +307,10 @@ class GameState
 
   restore_mp: (id, amount) ->
     entity = @_entities[id]
+    
+    if !entity
+      return
+    
     entity.mp += amount
 
     if entity.mp > entity.max_mp
@@ -312,6 +320,10 @@ class GameState
 
   grant_xp: (id, amount) ->
     entity = @_entities[id]
+    
+    if !entity
+      return
+    
     entity.xp += amount
 
     if entity.xp >= 1

@@ -3,10 +3,12 @@ root = exports ? this
 class Player extends Actor
   constructor: (id, scheduler, @engine, state, @on_update) ->
     super id, scheduler, state
+    @turn_count = 0
 
   on_act: ->
     @engine.lock()
     @on_update()
+    @turn_count++
 
     @accept_input = true
 

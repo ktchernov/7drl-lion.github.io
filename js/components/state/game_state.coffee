@@ -241,7 +241,9 @@ class GameState
       if overflow > 0
         @output = @output[overflow..]
 
-      @output.push msg
+      player_actor = @get_actor @player_id
+      
+      @output.push {turn_count: player_actor.turn_count, message: msg }
 
   shout_by: (id, msg) ->
     return if id == @player_id
@@ -296,6 +298,8 @@ class GameState
 
     if entity.hp > entity.max_hp
       entity.hp = entity.max_hp
+      if id == @player_id
+        SoundEffects.get().play_restore_hp();
 
   restore_mp: (id, amount) ->
     entity = @_entities[id]
@@ -303,6 +307,8 @@ class GameState
 
     if entity.mp > entity.max_mp
       entity.mp = entity.max_mp
+      if id == @player_id
+        SoundEffects.get().play_restore_mp();
 
   grant_xp: (id, amount) ->
     entity = @_entities[id]

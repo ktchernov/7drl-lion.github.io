@@ -62,7 +62,7 @@ class Player extends Actor
       action = new Action @id, @state
 
       if action.target == TARGET_NONE
-        cost = action.cost ? 0
+        cost = action.mp ? 0
         if cost > @state.get_mp(@id)
           @state.msg @id, "You don't have enough mp."
           return false

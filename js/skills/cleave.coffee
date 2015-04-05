@@ -36,6 +36,9 @@ class Cleave extends Skill
           @state.remove target_id
 
         success = true
+        
+    if success && @id == @state.player_id
+      SoundEffects.get().play_skill_used()
 
     success
 

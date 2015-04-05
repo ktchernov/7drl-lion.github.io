@@ -28,6 +28,9 @@ class Bash extends Skill
 
       @state.set_pos @id, i, j
 
+    if @id == @state.player_id
+      SoundEffects.get().play_skill_used()
+
     true
 
 register_skill 'bash', Bash

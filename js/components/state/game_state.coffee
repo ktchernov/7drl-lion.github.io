@@ -284,6 +284,8 @@ class GameState
   give_skill: (id, skill) ->
     entity = @_entities[id]
     entity.add_skill skill
+    if id == @player_id
+      SoundEffects.get().play_skill_gained();
 
   unlock_exit: ->
     @exit_locked = false
@@ -309,6 +311,8 @@ class GameState
     if entity.xp >= 1
       entity.level_up()
       @msg id, "You leveled up!"
+      if id == @player_id
+        SoundEffects.get().play_level_up();
       
   grant_score: (id, amount) ->
     entity = @_entities[id]

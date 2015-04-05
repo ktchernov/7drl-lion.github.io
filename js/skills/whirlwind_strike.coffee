@@ -29,8 +29,13 @@ class WhirlwindStrike extends Skill
           @state.msg target_id, "You are dead!"
 
           @state.remove target_id
-
+          
+        if @id == @state.player_id
+          SoundEffects.get().play_skill_used()
+          
         true
+
+    true
 
 register_skill 'whirlwind_strike', WhirlwindStrike
 register_monster_skill 'whirlwind_strike', WhirlwindStrike

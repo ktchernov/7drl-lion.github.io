@@ -1,6 +1,8 @@
 class Berserk extends Geas
   on_start: ->
-    @state.msg @id, "You descend into a berzerk rage."
+    @state.msg @id, "You descend into a berserk rage."
+    if @id == @state.player_id
+      SoundEffects.get().play_berserk()
 
   on_run: ->
     adjacent = @state.get_adjacent_positions @id

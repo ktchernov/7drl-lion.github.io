@@ -93,6 +93,7 @@ class Game
           @state.msg @player_id, 'The exit is locked. You must find and defeat the boss of this level to proceed.'
         else
           @_grant_score Game.DESCEND_LEVEL_SCORE
+          SoundEffects.get().play_descend()
           @new_floor()
 
     @map_ready = true
@@ -124,6 +125,7 @@ class Game
 
       @state.unlock_exit()
       @state.msg @player_id, 'You hear a loud CLANK in the distance. (Do you dare delve deeper?)'
+      SoundEffects.get().play_clank()
 
       @update()
 

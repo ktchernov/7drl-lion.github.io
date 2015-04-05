@@ -20,6 +20,9 @@ class Charge extends Skill
 
     @state.set_pos @id, x, y
     @execute_action 'attack', dir
+    
+    if @id == @state.player_id
+      SoundEffects.get().play_skill_used()
 
     true
 

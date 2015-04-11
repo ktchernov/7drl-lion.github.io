@@ -30,7 +30,7 @@ class SoundEffects
       @effects["use_skill"] = @load "media/effect_grunt.mp3"
       @effects["descend"] = @load "media/effect_jump_down.mp3"
       @effects["dig"] = @load "media/effect_dig.mp3"
-      @effects["dig_crumble"] = @load "media/effect_dig_crumble.mp3"
+      @effects["dig_rubble"] = @load "media/effect_dig_rubble.mp3"
       
     load: (url) ->
       new Howl {urls: [url]}
@@ -63,14 +63,11 @@ class SoundEffects
     play_restore_mp: ->
       @effects.restore1.play()
     
-    play_dig_crumble: ->
-      @effects.dig_crumble.play()
+    play_dig_rubble: ->
+      @effects.dig_rubble.play()
     
     play_dig: ->
       @effects.dig.play()
-      
-    play_alerted: ->
-#      @effects.alerted.play()
       
     play_hit: ->  
       percentile = ROT.RNG.getPercentage()

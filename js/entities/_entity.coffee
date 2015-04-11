@@ -41,6 +41,10 @@ class Entity
     @kill_score = opts.kill_score
     @kill_xp = opts.kill_xp
     
+    @sight_range = opts.sight_range
+    
+    @get_through_rubble = opts.get_through_rubble
+    
     @score = 0
 
 

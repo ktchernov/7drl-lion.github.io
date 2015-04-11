@@ -7,6 +7,9 @@ class Dragon extends Race
   base_mp: 20
   base_speed: 175
   base_attack: 15
+  base_sight_range: 10
+  
+  for_player: true
 
   skills: []
 

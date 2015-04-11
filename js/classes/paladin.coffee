@@ -4,11 +4,12 @@ class Paladin
 
   genders: ['male', 'female']
   alignments: ['good']
-  races: ['human', 'giant', 'angel']
+  races: ['human', 'giant', 'angel', 'elf', 'dwarf']
   base_hp: 10
   base_mp: 0
   base_speed: -20
   base_attack: 4
+  base_sight_range: 0
 
   skills: [
     'healing_aura'

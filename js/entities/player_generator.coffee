@@ -18,5 +18,6 @@ class PlayerGenerator extends EntityGenerator
       dead: false
       rarity: 'player'
       skills: [skill]
+      sight_range: gender.base_sight_range + race.base_sight_range + klass.base_sight_range
 
 root.PlayerGenerator = PlayerGenerator

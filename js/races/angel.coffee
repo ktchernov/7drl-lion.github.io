@@ -7,6 +7,8 @@ class Angel extends Race
   base_mp: 28
   base_speed: 80
   base_attack: 10
+  base_sight_range: 10
+  for_player: true
 
   skills: []
 

@@ -6,7 +6,7 @@ class Berserk extends Skill
   cooldown: 10
 
   run: (dir) ->
-    @add_geas @id, 5, 'berserk'
+    @add_geas @entity, 5, 'berserk'
 
 register_skill 'berserk', Berserk
 register_monster_skill 'berserk', Berserk

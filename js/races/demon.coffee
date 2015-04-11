@@ -7,6 +7,8 @@ class Demon extends Race
   base_mp: 15
   base_speed: 120
   base_attack: 12
+  base_sight_range: 8
+  for_player: true
 
   skills: []
 

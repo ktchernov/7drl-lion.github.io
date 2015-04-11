@@ -7,7 +7,9 @@ class Hobbit extends Race
   base_mp: 30
   base_speed: 80
   base_attack: 10
+  base_sight_range: 8
+  for_player: true
 
   skills: []
 
-# register_race Hobbit
+register_race Hobbit

@@ -8,7 +8,7 @@ FLOOR_REPS =
 
 WALL_REPS =
   wall: { rep:'#', color:[102, 102, 102] }
-  crumble: {  rep:'*', color:[190, 190, 190] }
+  rubble: {  rep:'*', color:[190, 190, 190] }
 
 CREATURE_REPS =
   player: '@'
@@ -26,6 +26,7 @@ CREATURE_REPS =
   human: 'h'
   shapeshifter: 's'
   werewolf: 'w'
+  vampire: 'V'
 
 CREATURE_COLORS =
   player: [255, 255, 255]
@@ -75,7 +76,8 @@ class MapPresenter
     @display.clear()
 
     light_map = {}
-    fov_map = {}
+    @state.clear_player_fov_map()
+    fov_map = @state.get_player_fov_map()
     
     player = state.player_id
     return unless @state.exists player
@@ -89,7 +91,7 @@ class MapPresenter
     _fov = new ROT.FOV.PreciseShadowcasting @_light_passes, topology: 8
     _lighting = new ROT.Lighting @_reflectivity, range: 4, passes: 1
 
-    _fov.compute pi, pj, 8, (y, x, r, visibility) ->
+    _fov.compute pi, pj, state.get_player_sight_range(), (y, x, r, visibility) ->
       fov_map[y*width + x] = visibility
 
           
@@ -102,7 +104,7 @@ class MapPresenter
       light_map[y*width + x] = color
 
     ambient_light = [200, 200, 200]
-    prev_seen_light = [100, 100, 100]
+    prev_seen_light = [130, 130, 130]
     
     if @_prev_seen_floor != @state.floor
       @_prev_seen = {}

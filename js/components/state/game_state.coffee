@@ -27,6 +27,8 @@ class GameState
 
     @output = []
     @actors = {}
+    
+    @_player_fov_map = {}
 
   # GENERATORS
 
@@ -35,6 +37,8 @@ class GameState
     @player_id = @_player.id
 
     @_add @_player
+    
+    @_player
 
   generate_monster: (rarity) ->
     monster = @_monster_generator.generate rarity, @floor
@@ -130,7 +134,7 @@ class GameState
   is_blocked: (i, j) -> @is_wall(i, j) or @is_creature(i, j)
   is_creature: (i, j) -> @_map.exists i, j, CREATURES
   is_wall: (i, j) -> @_map.exists i, j, WALLS
-  is_crumbly: (i, j) -> @_map.at i, j, WALLS, 'crumble'
+  is_rubble: (i, j) -> @_map.at i, j, WALLS, 'rubble'
   is_entrance: (i, j) -> @_map.at i, j, FLOORS, 'entrance'
   is_exit: (i, j) -> @_map.at i, j, FLOORS, 'exit'
   get_data: (x, y) -> @_map.get_stack x, y
@@ -215,8 +219,8 @@ class GameState
     Math.abs(ni-i) + Math.abs(nj-j)
     
   get_euclid_distance_sq: (i, j, ni, nj) ->
-    idiff = Math.abs(ni-i)
-    jdiff = Math.abs(nj-j)
+    idiff = ni-i
+    jdiff = nj-j
     idiff * idiff + jdiff * jdiff
 
   get_adjacent_pos: (id, dir) ->
@@ -362,14 +366,27 @@ class GameState
     if entity
       entity.score += amount
       
-  remove_crumble: (x, y) ->
-    if @is_crumbly x, y
+  get_player_sight_range: ->
+    @_player.sight_range
+      
+  remove_rubble: (x, y) ->
+    if @is_rubble x, y
       @_map.clear_tile x, y, WALLS
       @_map.set_tile x, y, FLOORS, "floor"
       
-  make_crumble: (x, y) ->
+  make_rubble: (x, y) ->
     if @is_wall x, y
-      @_map.set_tile x, y, WALLS, "crumble"
+      @_map.set_tile x, y, WALLS, "rubble"
+      
+  clear_player_fov_map: ->
+    @_player_fov_map = {}
+
+  get_player_fov_map: ->
+    @_player_fov_map
+    
+  is_visible_to_player: (i, j) ->
+    @_player_fov_map[i*@map_width + j]
+    
 
   # PRIVATE
 

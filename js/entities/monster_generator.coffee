@@ -6,6 +6,8 @@ class MonsterGenerator extends EntityGenerator
     gender = $(list_genders()).random_element()
     race = $(list_races_for_alignment(alignment.key)).random_element()
     klass = $(list_classes_for_alignment_and_race(alignment.key, race.key)).random_element()
+          
+    throw new Error "No class for #{alignment.key} #{race.key}" if !klass
 
     scaling_factor = switch rarity
       when 'trash' then 0.1
@@ -37,6 +39,8 @@ class MonsterGenerator extends EntityGenerator
     base_speed = Math.ceil(base_speed * Math.pow(0.9, (floor - 1)))
 
     skill = $(list_monster_skill_keys()).random_element()
+    
+    sight_range = gender.base_sight_range + race.base_sight_range + klass.base_sight_range
 
     new Entity
       id: @generate_id()
@@ -55,5 +59,7 @@ class MonsterGenerator extends EntityGenerator
       surge_grant_chance: surge_grant_chance
       kill_score: scaling_factor * 100
       kill_xp: kill_xp
+      get_through_rubble: race.can_get_through_rubble
+      sight_range: sight_range
 
 root.MonsterGenerator = MonsterGenerator

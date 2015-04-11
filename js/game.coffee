@@ -25,7 +25,7 @@ class Game
   prompt_character: ->
     @prompt_gender (gender) =>
       @prompt_race (race) =>
-        @prompt_class (klass) =>
+        @prompt_class race, (klass) =>
           @create_player gender, race, klass
           @new_floor()
 
@@ -35,12 +35,12 @@ class Game
       cb gender
 
   prompt_race: (cb) ->
-    @show_menu new Menu "Choose your race: ", list_races(), (race) =>
+    @show_menu new Menu "Choose your race: ", list_races({player: true}), (race) =>
       @show_menu null
       cb race
 
-  prompt_class: (cb) ->
-    @show_menu new Menu "Choose your class: ", list_classes(), (klass) =>
+  prompt_class: (race, cb) ->
+    @show_menu new Menu "Choose your class: ", list_classes_for_race(race.key), (klass) =>
       @show_menu null
       cb klass
 
@@ -49,10 +49,11 @@ class Game
     @update()
 
   create_player: (gender, race, klass) ->
-    @player_id = @state.generate_player gender, race, klass
+    player_entity = @state.generate_player gender, race, klass
+    @player_id = player_entity.id
 
     Player = get_actor 'player'
-    @player_actor = new Player @player_id, @scheduler, @engine, @state, => @update()
+    @player_actor = new Player player_entity, @scheduler, @engine, @state, => @update()
     @scheduler.add @player_actor, true, 0
     @state.register_actor @player_id, @player_actor
 
@@ -101,7 +102,7 @@ class Game
 
   _generate_trash: ->
     monster_entity = @state.generate_monster 'trash'
-    @_make_actor monster_entity.id, =>
+    @_make_actor monster_entity, =>
       @_grant_kill_bonuses(monster_entity)
       @update()
 
@@ -110,7 +111,7 @@ class Game
 
   _generate_uncommon: ->
     monster_entity = @state.generate_monster 'uncommon'
-    @_make_actor monster_entity.id, =>
+    @_make_actor monster_entity, =>
       @_grant_kill_bonuses(monster_entity)
       @update()
 
@@ -119,7 +120,7 @@ class Game
 
   _generate_boss: ->
     monster_entity = @state.generate_monster 'rare'
-    @_make_actor monster_entity.id, =>
+    @_make_actor monster_entity, =>
       @_grant_kill_bonuses(monster_entity)
       @_grant_skill()
 
@@ -189,17 +190,17 @@ class Game
   _grant_score: (score) ->
     @state.grant_score @player_id, score
 
-  _make_actor: (id, cb) ->
+  _make_actor: (entity, cb) ->
     cb ?= ->
 
     AggressiveMob = get_actor 'aggressive'
-    monster_actor = new AggressiveMob id, @scheduler, @engine, @state
+    monster_actor = new AggressiveMob entity, @scheduler, @engine, @state
     @scheduler.add monster_actor, true, 0
-    @state.register_actor id, monster_actor
+    @state.register_actor entity.id, monster_actor
 
     monster_actor.on_remove =>    
       @scheduler.remove monster_actor
-      @state.unregister_actor id
+      @state.unregister_actor entity.id
       
       cb()
 

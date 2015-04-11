@@ -31,21 +31,26 @@ CREATURE_COLORS =
   trash: [80, 80, 50]
   uncommon: [80, 50, 255]
   rare: [255, 0, 0]
+  
+DISPLAY_ALL = false # debug flag to show full map
 
 class MapPresenter
   constructor: (@parent, @data_parent) ->
-    @display = new ROT.Display 1, 3, { width: 1, height: 1 }
-    @parent.append @display.getContainer()
-
+   
     @state = @data_parent.state
-
-    @display.setOptions
-      width: @state.map_width
-      height: @state.map_height
-      fontSize: 14
-      fontFamily: "monospace"
-      bg: "#000000"
+    
+    font_family = @parent.css "font-family"
+    font_family ?= "monospace"
+    
+    @display = new ROT.Display {
+      width: @state.map_width,
+      height: @state.map_height,
+      fontSize: 14,
+      fontFamily: font_family,
+      bg: "#000000",
       layout: 'rect'
+    }
+    @parent.append @display.getContainer()
     
     @_prev_seen = {}
     @_prev_seen_floor = @state.floor
@@ -53,7 +58,6 @@ class MapPresenter
   
   _light_passes: (y, x) =>
     not @state.is_wall y, x
-    
     
   _reflectivity: (y, x) =>
     if @state.is_wall(y, x) then 0.0 else 1.0
@@ -81,19 +85,19 @@ class MapPresenter
     width = state.map_width
     
         
-    @_fov = new ROT.FOV.PreciseShadowcasting @_light_passes, topology: 8
-    @_lighting = new ROT.Lighting @_reflectivity, range: 4, passes: 1
+    _fov = new ROT.FOV.PreciseShadowcasting @_light_passes, topology: 8
+    _lighting = new ROT.Lighting @_reflectivity, range: 4, passes: 1
 
-    @_fov.compute pi, pj, 12, (y, x, r, visibility) ->
+    _fov.compute pi, pj, 8, (y, x, r, visibility) ->
       fov_map[y*width + x] = visibility
 
           
     _light_fov = new ROT.FOV.PreciseShadowcasting @_light_passes, topology: 4
-    @_lighting.setFOV _light_fov
+    _lighting.setFOV _light_fov
 
-    @_lighting.setLight pi, pj, [255, 255, 255]
+    _lighting.setLight pi, pj, [255, 255, 255]
 
-    @_lighting.compute (y, x, color) ->
+    _lighting.compute (y, x, color) ->
       light_map[y*width + x] = color
 
     ambient_light = [200, 200, 200]
@@ -102,6 +106,24 @@ class MapPresenter
     if @_prev_seen_floor != @state.floor
       @_prev_seen = {}
       @_prev_seen_floor = @state.floor
+      
+    if DISPLAY_ALL
+      for y in [0..height-1] by 1
+        for x in [0..width-1] by 1
+          r = @convert @state.get_data(y, x)
+          base_color = r.color
+          light = ambient_light
+
+          posIx = y * width + x
+          
+          if light_map[posIx]
+            light = ROT.Color.add light, light_map[posIx]
+
+          final_color = ROT.Color.multiply base_color, light
+
+          @display.draw x,  y, r.rep, ROT.Color.toRGB final_color
+          
+      return
     
     $.each @_prev_seen, (posIx) =>
       unless posIx of fov_map

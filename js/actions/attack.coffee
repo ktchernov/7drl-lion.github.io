@@ -15,6 +15,10 @@ class Attack extends Action
       target_short = @state.get_short_description target_id
 
       @state.msg @id, "You #{opts.flavor} #{target_short}."
+      
+      #workaround "demolish" is not displayed correctl if you just tag on the 's'
+      opts.flavor = "#{opts.flavor}e" if _.str.endsWith opts.flavor, "sh"
+        
       @state.msg target_id, "#{_.str.capitalize(actor_short)} #{opts.flavor}s you!"
 
       @state.damage target_id, attack

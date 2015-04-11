@@ -7,6 +7,8 @@ class Human extends Race
   base_mp: 20
   base_speed: 100
   base_attack: 10
+  base_sight_range: 8
+  for_player: true
 
   skills: []
 

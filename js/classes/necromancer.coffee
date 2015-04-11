@@ -4,11 +4,12 @@ class Necromancer
 
   genders: ['male', 'female']
   alignments: ['evil']
-  races: ['human', 'werewolf', 'dragon', 'demon']
+  races: ['human', 'werewolf', 'dragon', 'demon', 'vampire', 'elf', 'dwarf', 'hobbit']
   base_hp: -10
   base_mp: 26
   base_speed: 20
   base_attack: -5
+  base_sight_range: 0
 
   skills: [
     'summon_skeletons'

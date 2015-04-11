@@ -9,9 +9,12 @@ TARGET_MENU = 5
 
 class Action
   target: TARGET_NONE
-  constructor: (@id, @state) ->
+  constructor: (@entity, @state) ->
+    if @entity
+      @id = @entity.id
 
-  add_geas: (id, duration, name) ->
+  add_geas: (@entity, duration, name) ->
+    id = @entity.id
     Geas = get_geas name
     geas = new Geas duration, id, @state
     actor = @state.get_actor id
@@ -19,7 +22,7 @@ class Action
 
   execute_action: (name, args...) ->
     Action = get_action name
-    action = new Action @id, @state
+    action = new Action @entity, @state
     action.run args...
 
 actions = []

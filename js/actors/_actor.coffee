@@ -1,7 +1,8 @@
 root = exports ? this
 
 class Actor
-  constructor: (@id, @scheduler, @state) ->
+  constructor: (@entity, @scheduler, @state) ->
+    @id = @entity.id
     @acting = false
     @removed = ->
     @geas = null
@@ -25,7 +26,7 @@ class Actor
     @on_act()
 
   done: (speed) ->
-    speed ?= @state.get_speed @id
+    speed ?= @entity.speed
 
     @scheduler.setDuration speed
     @acting = false
@@ -46,7 +47,7 @@ class Actor
 
   execute_action: (name, args...) ->
     Action = get_action name
-    action = new Action @id, @state
+    action = new Action @entity, @state
     action.run args...
     
   

@@ -1,7 +1,9 @@
 root = exports ? this
 
 class Geas
-  constructor: (@duration, @id, @state) ->
+  constructor: (@duration, @entity, @state) ->
+    if @entity
+      @id = @entity.id
 
   active: ->
     @duration > 0
@@ -14,8 +16,11 @@ class Geas
 
   run: ->
     @duration -= 1
-    @on_run()
-
+    if @state.exists @id
+      @on_run()
+    else
+      @duration = 0
+      
     if @duration <= 0
       @on_end()
 
@@ -25,7 +30,7 @@ class Geas
 
   execute_action: (name, args...) ->
     Action = get_action name
-    action = new Action @id, @state
+    action = new Action @entity, @state
     action.run args...
 
 geass = []

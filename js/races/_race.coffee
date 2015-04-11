@@ -1,6 +1,6 @@
 root = exports ? this
 
-class Race
+class Race  
   constructor: ->
 
 races = []
@@ -12,8 +12,12 @@ register_race = (race) ->
   races.push r
   races_by_key[r.key] = r
 
-list_races = ->
-  races
+list_races = (options) ->
+  if options.player
+    _.filter races, (race) ->
+      race.for_player
+  else
+    races
 
 list_races_for_alignment = (alignment) ->
   _.filter races, (race) ->

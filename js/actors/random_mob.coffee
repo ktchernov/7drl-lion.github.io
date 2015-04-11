@@ -1,8 +1,8 @@
 root = exports ? this
 
 class RandomMob extends Actor
-  constructor: (id, scheduler, @engine, state) ->
-    super id, scheduler, state
+  constructor: (entity, scheduler, @engine, state) ->
+    super entity, scheduler, state
 
   on_act: ->
     @engine.lock()

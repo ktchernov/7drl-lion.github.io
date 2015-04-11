@@ -1,8 +1,8 @@
 root = exports ? this
 
 class Player extends Actor
-  constructor: (id, scheduler, @engine, state, @on_update) ->
-    super id, scheduler, state
+  constructor: (entity, scheduler, @engine, state, @on_update) ->
+    super entity, scheduler, state
     @turn_count = 0
 
   on_act: ->
@@ -44,12 +44,12 @@ class Player extends Actor
     dir = @_get_direction key, mods
     if dir
       Action = get_action 'move_or_attack'
-      action = new Action @id, @state
+      action = new Action @entity, @state
       return action.run dir
 
     else if key == 'd' and mods.shift
       Action = get_action 'dig'
-      action = new Action @id, @state
+      action = new Action @entity, @state
       @_send_target_message action.target
 
       @target_mode = action.target
@@ -71,7 +71,7 @@ class Player extends Actor
 
       return false unless Action
 
-      action = new Action @id, @state
+      action = new Action @entity, @state
 
       if action.target == TARGET_NONE
         cost = action.mp ? 0

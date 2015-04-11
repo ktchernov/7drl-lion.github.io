@@ -1,0 +1,223 @@
+/*
+ * CREDIT
+ * ------
+ *
+ * BROWSER RESET:
+ *   http://meyerweb.com/eric/tools/css/reset/
+ *     v2.0 | 20110126
+ *     License: none (public domain)
+ *
+ * OPACITY:
+ *   https://gist.github.com/jgv/745754
+ *
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+#game {
+  background-color: #000000;
+  border: 1px solid #009900;
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 10px;
+  color: #009900;
+  height: 470px;
+  overflow: hidden;
+  position: relative;
+  width: 940px; }
+  #game a {
+    color: #009900; }
+  #game a:hover {
+    color: #66ff66; }
+  #game .sidebar, #game .status, #game .help, #game .skills {
+    width: 220px; }
+  #game .bottombar, #game .output {
+    height: 110px; }
+  #game .section, #game .map, #game .status, #game .help, #game .skills, #game .points, #game .output {
+    overflow: hidden;
+    position: absolute;
+    font-size: 110%; }
+    #game .section .title, #game .map .title, #game .status .title, #game .help .title, #game .skills .title, #game .points .title, #game .output .title {
+      background-color: #666666;
+      color: #66ff66;
+      padding: 7px 10px;
+      border-bottom: 1px solid #009900; }
+    #game .section .content, #game .map .content, #game .status .content, #game .help .content, #game .skills .content, #game .points .content, #game .output .content {
+      padding: 7px 10px; }
+      #game .section .content b, #game .map .content b, #game .status .content b, #game .help .content b, #game .skills .content b, #game .points .content b, #game .output .content b {
+        color: #66ff66; }
+
+#game .menu {
+  border: 1px solid #009900;
+  background-color: #000000;
+  width: 200;
+  height: 270px;
+  left: 370px;
+  position: absolute;
+  top: 100px;
+  z-index: 100; }
+  #game .menu .title {
+    border-bottom: 1px solid #009900;
+    background-color: #666666;
+    color: #66ff66;
+    padding: 7px 10px; }
+  #game .menu .content {
+    padding: 7px 10px; }
+
+#game .overlay {
+  width: 940px;
+  height: 470px;
+  background-color: #666666;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity=30);
+  -moz-opacity: 0.3;
+  -khtml-opacity: 0.3;
+  opacity: 0.3;
+  position: absolute;
+  z-index: 99; }
+
+#game .map {
+  width: 740px;
+  height: 370px;
+  top: 0px;
+  left: 0px; }
+
+#map {
+  text-align: center;
+  float: left;
+  overflow: hidden; }
+
+#game .status {
+  border-left: 1px solid #009900;
+  height: 80px;
+  top: 0px;
+  right: 0px;
+  font-size: 110%; }
+  #game .status #score {
+    font-weight: bolder;
+    color: coral; }
+
+#game .help {
+  border-left: 1px solid #009900;
+  border-top: 1px solid #009900;
+  height: 220px;
+  bottom: 0px;
+  right: 0px; }
+
+#game .skills {
+  border-top: 1px solid #009900;
+  border-left: 1px solid #009900;
+  height: 170px;
+  top: 80px;
+  right: 0px; }
+  #game .skills .invalid {
+    color: #FF6600; }
+  #game .skills .disabled {
+    color: #666666; }
+  #game .skills .new {
+    color: crimson;
+    font-weight: bolder; }
+
+#game .points {
+  border-top: 1px solid #009900;
+  height: 25px;
+  width: 720px;
+  bottom: 110px;
+  left: 0px;
+  right: 220px; }
+  #game .points .bar.hp .filled {
+    color: #FF6600; }
+  #game .points .bar.hp .empty {
+    color: #996600; }
+  #game .points .bar.mp .filled {
+    color: #0066FF; }
+  #game .points .bar.mp .empty {
+    color: #006699; }
+  #game .points .bar.xp .filled {
+    color: #FF66FF; }
+  #game .points .bar.xp .empty {
+    color: #996699; }
+
+#game .output {
+  border-top: 1px solid #009900;
+  width: 720px;
+  bottom: 0px; }
+  #game .output .content {
+    height: 82px;
+    overflow: hidden;
+    padding: 7px 0px;
+    width: 700px; }
+    #game .output .content .entry, #game .output .content .oldEntry {
+      padding: 2px 10px; }
+    #game .output .content .oldEntry {
+      color: #005000; }
+
+#game_over {
+  border: 1px solid #009900;
+  font-size: 120%;
+  background-color: #000000;
+  width: 250;
+  height: 250;
+  left: 345px;
+  position: absolute;
+  top: 110px;
+  z-index: 100; }
+  #game_over .title {
+    border-bottom: 1px solid #009900;
+    background-color: #666666;
+    color: #66ff66;
+    padding: 7px 10px; }
+  #game_over .content {
+    padding: 7px 10px; }
+    #game_over .content b {
+      color: #66ff66; }
+
+#game_over_overlay {
+  width: 940px;
+  height: 470px;
+  background-color: #666666;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+  filter: alpha(opacity=30);
+  -moz-opacity: 0.3;
+  -khtml-opacity: 0.3;
+  opacity: 0.3;
+  position: absolute;
+  z-index: 99; }

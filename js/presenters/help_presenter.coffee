@@ -5,15 +5,14 @@ class HelpPresenter
     @one_time = false
 
     @parent.html "Move: <br />" +
-      "&nbsp;&nbsp;* <b>arrow keys</b><br />" +
-      "&nbsp;&nbsp;* <b>num pad</b><br />" +
+      "&nbsp;&nbsp;* <b>arrow keys, num pad, or</b><br />" +
       "&nbsp;&nbsp;* <b>hjkl</b> and <b>yubn</b><br />" +
       "<br />" +
-      "Wait: <br />" +
-      "&nbsp;&nbsp;* <b>space</b><br />" +
+      "Dig (walls or rubble): <b>D</b><br />" +
       "<br />" +
-      "Skills: <br />" +
-      "&nbsp;&nbsp;* <b>1-9</b> and <b>0</b><br />" +
+      "Wait: <b>space</b><br />" +
+      "<br />" +
+      "Skills: <b>1-9</b> and <b>0</b><br />" +
       "<br />" +
       "GOALS:<br />" +
       "&nbsp;&nbsp;* <b>kill the boss</b> to proceed<br />" +

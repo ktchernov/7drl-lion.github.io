@@ -130,6 +130,7 @@ class GameState
   is_blocked: (i, j) -> @is_wall(i, j) or @is_creature(i, j)
   is_creature: (i, j) -> @_map.exists i, j, CREATURES
   is_wall: (i, j) -> @_map.exists i, j, WALLS
+  is_crumbly: (i, j) -> @_map.at i, j, WALLS, 'crumble'
   is_entrance: (i, j) -> @_map.at i, j, FLOORS, 'entrance'
   is_exit: (i, j) -> @_map.at i, j, FLOORS, 'exit'
   get_data: (x, y) -> @_map.get_stack x, y
@@ -174,6 +175,25 @@ class GameState
         distance = dist
 
     closest
+    
+  get_nearby_creatures: (id, opts={}) ->
+    [i, j] = @get_pos id
+    range = opts.range ? 999
+    
+    range_sq = range * range
+    
+    nearby_creatures = []
+
+    @each_monster (monster_id) =>
+      return if monster_id == @player_id
+      
+      [mi,mj] = @get_pos monster_id
+      dist = @get_euclid_distance_sq i, j, mi, mj
+
+      if dist <= range_sq
+        nearby_creatures.push @get_actor monster_id
+
+    nearby_creatures
 
   find_in_direction: (i, j, dir, cb) ->
     [oi, oj] = @_offset_by_dir dir
@@ -193,6 +213,11 @@ class GameState
 
   get_distance: (i, j, ni, nj) ->
     Math.abs(ni-i) + Math.abs(nj-j)
+    
+  get_euclid_distance_sq: (i, j, ni, nj) ->
+    idiff = Math.abs(ni-i)
+    jdiff = Math.abs(nj-j)
+    idiff * idiff + jdiff * jdiff
 
   get_adjacent_pos: (id, dir) ->
     [i, j] = @get_pos id
@@ -336,6 +361,15 @@ class GameState
     entity = @_entities[id]
     if entity
       entity.score += amount
+      
+  remove_crumble: (x, y) ->
+    if @is_crumbly x, y
+      @_map.clear_tile x, y, WALLS
+      @_map.set_tile x, y, FLOORS, "floor"
+      
+  make_crumble: (x, y) ->
+    if @is_wall x, y
+      @_map.set_tile x, y, WALLS, "crumble"
 
   # PRIVATE
 

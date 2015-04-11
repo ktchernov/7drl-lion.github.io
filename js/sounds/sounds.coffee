@@ -19,6 +19,7 @@ class SoundEffects
         death:        ["noise",0.0000,deathVolume,0.0000,0.3000,0.7380,1.1040,20.0000,1534.0000,2400.0000,-0.2580,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
         skill_gained: ["synth",0.0000,volume,0.0000,0.4000,0.0000,0.1520,20.0000,585.0000,2400.0000,0.1920,0.0000,0.3270,29.6678,0.0003,0.0000,0.0000,0.0000,0.5000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000],
         level_up: ["synth",0.0000,volume,0.0000,0.6240,0.0000,0.5360,20.0000,197.0000,2400.0000,0.3720,-0.3040,0.1980,18.7261,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000],
+        alerted: ["square",0.0000,0.4000,0.0000,0.0800,0.4620,0.1260,20.0000,770.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.3340,0.2380,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]
       };
       @effects = jsfxlib.createWaves audioLibParams
       @effects["berserk"] = @load "media/effect_scream.mp3"
@@ -28,7 +29,8 @@ class SoundEffects
       @effects["cleave"] = @load "media/effect_cleave.mp3"
       @effects["use_skill"] = @load "media/effect_grunt.mp3"
       @effects["descend"] = @load "media/effect_jump_down.mp3"
-      
+      @effects["dig"] = @load "media/effect_dig.mp3"
+      @effects["dig_crumble"] = @load "media/effect_dig_crumble.mp3"
       
     load: (url) ->
       new Howl {urls: [url]}
@@ -60,6 +62,15 @@ class SoundEffects
       
     play_restore_mp: ->
       @effects.restore1.play()
+    
+    play_dig_crumble: ->
+      @effects.dig_crumble.play()
+    
+    play_dig: ->
+      @effects.dig.play()
+      
+    play_alerted: ->
+#      @effects.alerted.play()
       
     play_hit: ->  
       percentile = ROT.RNG.getPercentage()
@@ -74,6 +85,7 @@ class SoundEffects
         
     play_death: () ->
       @effects.death.play()
+      
       
       
     

@@ -10,6 +10,9 @@ class Move extends Action
 
       true
 
+    else if @state.is_crumbly i, j
+      @state.msg @id, "Pile of rocks blocks your way, digging might help."
+      false
     else
       @state.msg @id, "You can't go that way."
       false

@@ -47,6 +47,16 @@ class Player extends Actor
       action = new Action @id, @state
       return action.run dir
 
+    else if key == 'd' and mods.shift
+      Action = get_action 'dig'
+      action = new Action @id, @state
+      @_send_target_message action.target
+
+      @target_mode = action.target
+      @target_action = action
+      @target_cost = 0
+
+      return false
     else
       Action = switch key
         when 'space' then get_action 'wait'

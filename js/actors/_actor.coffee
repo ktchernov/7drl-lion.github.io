@@ -48,6 +48,10 @@ class Actor
     Action = get_action name
     action = new Action @id, @state
     action.run args...
+    
+  
+  alert_by_sound: ->
+    
 
   _removed_check: ->
     not @state.exists @id

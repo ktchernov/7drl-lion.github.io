@@ -8,6 +8,7 @@ FLOOR_REPS =
 
 WALL_REPS =
   wall: { rep:'#', color:[102, 102, 102] }
+  crumble: {  rep:'*', color:[190, 190, 190] }
 
 CREATURE_REPS =
   player: '@'

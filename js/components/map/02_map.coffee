@@ -27,8 +27,10 @@ class Map
   get_stack: (i, j) ->
     return [] if @out_of_bounds i, j
 
-    $(@num_layers).times_map (n) =>
-      @get_tile i, j, n
+    stack = []
+    for l in [0..@num_layers-1] by 1
+      stack[l] = @get_tile i, j, l
+    stack
 
   get_tile: (i, j, n) ->
     return if @out_of_bounds i, j, n

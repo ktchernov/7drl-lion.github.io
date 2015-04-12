@@ -1,0 +1,29 @@
+#current {
+  color: darkblue;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: 90%;
+  padding-left: $wpadding_small;
+  padding-top: $hpadding;
+  
+  #currentTrack {
+    font-style: italic;
+    font-weight: bold;
+  }
+
+  #currentArtist {
+  }
+}
+
+
+#credits {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  color: darkblue;
+  font-style: italic;
+  text-align: center;
+  padding-bottom: $hpadding;
+  line-height: 1.5;
+  font-size: 80%;
+}

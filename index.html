@@ -16,47 +16,26 @@
 
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <script src="js/main.js"></script>
+    
+    <script src="js/music.js"></script>
   </head>
 
   <body>
     <div id="game"></div>
-
-<audio id="musicAudio" controls="controls" autoplay="autoplay">
-Your browser does not support the HTML5 Audio Tag.
-</audio>
-
-		<script type="text/javascript">
-			jQuery(function($) {
-					var index = 0,
-					mediaPath = 'media/',
-					tracks = [
-						{"track":1, "file":"Rah Rah Rah.mp3"},
-                        {"track":2, "file":"Bonus Life.mp3"},
-					],
-					trackCount = tracks.length,
-					audio = $('#musicAudio').bind('play', function() {
-						playing = true;
-					}).bind('pause', function() {
-						playing = false;
-					}).bind('ended', function() {
-						if((index + 1) < trackCount) {
-							index++;
-							loadTrack(index);
-							audio.play();
-						} else {
-							audio.pause();
-							index = 0;
-							loadTrack(index);
-						}
-                                           }).get(0),
-					loadTrack = function(id) {
-						index = id;
-						audio.src = mediaPath + tracks[id].file;
-					};
-                    loadTrack(index);
-                    audio.volume = 0.6;
-				});
-</script>
+  
+    
+    <div id="music">
+      <audio id="musicAudio" controls="controls" autoplay="autoplay">
+      Your browser does not support the HTML5 Audio Tag.
+      </audio>
+      <div id="current">
+        <p>Playing <span id="currentTrack">Nothing</span> by <a id="currentArtist" href="" target="_blank">No One</a></p>
+      </div>
+    </div>
+    
+    <div id="credits">
+      <p>By Konstantin Tchernov &copy; 2015-today<br/> Based on "Lyon's Den" by Lion<br/><a href="./credits.html" target="_blank">Credits</a></p>
+    </div>
 
   </body>
 </html>

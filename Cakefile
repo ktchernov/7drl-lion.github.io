@@ -7,7 +7,7 @@ OUTPUT_FILE = "js/#{NAME}.js"
 
 task 'build', 'Build', ->
   snockets = new Snockets()
-  js = snockets.getConcatenation INPUT_FILE, async: false, minify: true
+  js = snockets.getConcatenation INPUT_FILE, async: false, minify: false
   fs.writeFileSync OUTPUT_FILE, js
 
 task 'clean', "remove #{OUTPUT_FILE}", ->

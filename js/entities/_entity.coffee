@@ -48,6 +48,7 @@ class Entity
     @gold ?= 0
     
     @can_pick_up_gold = opts.can_pick_up_gold
+    @can_pick_up_potions = opts.can_pick_up_potions
 
 
 

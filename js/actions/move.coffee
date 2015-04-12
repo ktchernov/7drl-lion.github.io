@@ -25,7 +25,10 @@ class Move extends Action
     @state.set_pos @id, i, j
     
     if @entity.can_pick_up_gold and @state.has_gold i, j
-      amount = @state.pickup_gold i, j, @id
+      @state.pickup_gold i, j, @id
+      
+    if @entity.can_pick_up_potions and @state.get_potion i, j
+      @state.pickup_potion i, j, @id
     
     @state.set_off_triggers @id
 

@@ -20,5 +20,6 @@ class PlayerGenerator extends EntityGenerator
       skills: [skill]
       sight_range: gender.base_sight_range + race.base_sight_range + klass.base_sight_range
       can_pick_up_gold: true
+      can_pick_up_potions: true
 
 root.PlayerGenerator = PlayerGenerator

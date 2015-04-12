@@ -12,7 +12,7 @@ class MonsterGenerator extends EntityGenerator
     scaling_factor = switch rarity
       when 'trash' then 0.1
       when 'uncommon' then 0.2
-      when 'rare' then 0.4
+      when 'rare' then 0.5
 
     scaling_factor += scaling_factor * (floor - 1) * 0.2
     

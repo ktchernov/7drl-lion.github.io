@@ -32,6 +32,7 @@ class GameState
     @_player_fov_map = {}
     
     @_gold_map = {}
+    @_potions_map = {}
 
   # GENERATORS
 
@@ -67,6 +68,7 @@ class GameState
   clear_map: ->
     @_map.clear()
     @_gold_map = {}
+    @_potions_map = {}
 
   clear_monsters: ->
     @each_monster (id) =>
@@ -339,8 +341,8 @@ class GameState
 
     if entity.hp > entity.max_hp
       entity.hp = entity.max_hp
-      if id == @player_id
-        SoundEffects.get().play_restore_hp();
+    if id == @player_id
+      SoundEffects.get().play_restore_hp();
 
   restore_mp: (id, amount) ->
     entity = @_entities[id]
@@ -352,8 +354,8 @@ class GameState
 
     if entity.mp > entity.max_mp
       entity.mp = entity.max_mp
-      if id == @player_id
-        SoundEffects.get().play_restore_mp();
+    if id == @player_id
+      SoundEffects.get().play_restore_mp();
 
   grant_xp: (id, amount) ->
     entity = @_entities[id]
@@ -404,17 +406,47 @@ class GameState
     
   is_visible_to_player: (i, j) ->
     @_player_fov_map[i*@map_width + j]
+        
+  put_potion: (i, j, type) ->
+    key = @_hash_map_key(i, j)
+    @_potions_map[key] = type
+  
+  pickup_potion: (i, j, entity_id) ->
+    entity = @_entities[entity_id]
+    return unless entity
+    
+    key = @_hash_map_key(i, j)
+    if key of @_potions_map and @_potions_map[key]
+      potion = @_potions_map[key]
+      amount = RNG.clampedNormal 8 + 8 * (@floor - 1) * 0.1, 2
+      if potion == 'hp'
+        if entity.hp < entity.max_hp
+          @msg entity_id, "You drink the health potion, a warm healing feeling washes over you!"
+          @restore_hp entity.id, amount
+          delete @_potions_map[key]
+      else
+        if entity.mp < entity.max_mp
+          @msg entity_id, "You drink the magic potion, your toes tingle!"
+          @restore_mp entity.id, amount
+          delete @_potions_map[key]
+          
+  get_potion: (i, j) ->
+    key = @_hash_map_key(i, j)
+    if key of @_potions_map
+      @_potions_map[key]
+    else
+      undefined
     
   put_gold: (i, j, gold_amount) ->
     if gold_amount
-      key = @_gold_key(i, j)
+      key = @_hash_map_key(i, j)
       @_gold_map[key] ?= 0
       @_gold_map[key] += gold_amount
     
   pickup_gold: (i, j, entity_id) ->
     entity = @_entities[entity_id]
     if entity
-      key = @_gold_key(i, j)
+      key = @_hash_map_key(i, j)
       gold = @_gold_map[key]
       entity.gold += gold
       delete @_gold_map[key]
@@ -424,10 +456,10 @@ class GameState
         SoundEffects.get().play_coin()
     
   has_gold: (i, j) ->
-    key = @_gold_key(i, j)
+    key = @_hash_map_key(i, j)
     key of @_gold_map
     
-  _gold_key: (i, j) ->
+  _hash_map_key: (i, j) ->
     i * @map_width + j
 
   # PRIVATE

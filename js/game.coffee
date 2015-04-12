@@ -82,6 +82,7 @@ class Game
 
     @_generate_enemies()
     @_generate_gold()
+    @_generate_potions()
 
     [i, j] = @state.random_empty_space()
     @state.add_exit i, j
@@ -111,6 +112,18 @@ class Game
       [i, j] = @state.random_empty_space()
       gold_amount = RNG.clampedNormal gold_amount_mean, gold_amount_stddev
       @state.put_gold i, j, gold_amount
+      
+  _generate_potions: ->
+    NUM_POTIONS_MEAN = 3
+    NUM_POTIONS_STDDEV = 0.75
+    HP_POTION_CHANCE = 70
+    
+    num_potions = RNG.clampedNormal NUM_POTIONS_MEAN, NUM_POTIONS_STDDEV
+    
+    $(num_potions).times =>
+      [i, j] = @state.random_empty_space()
+      type  = if ROT.RNG.getPercentage() <= 70 then 'hp' else 'mp'
+      @state.put_potion i, j, type
 
   _generate_enemies: ->
     num_trash = RNG.clampedNormal 15, 1

@@ -38,6 +38,12 @@ CREATURE_COLORS =
 GOLD_REP = '$'
 
 GOLD_COLOR = [255,223,0]
+
+POTIONS_REP = '!'
+
+POTIONS_COLORS = 
+  hp: [255, 0, 0]
+  mp: [80, 50, 255]
   
 DISPLAY_ALL = false # debug flag to show full map
 
@@ -177,6 +183,8 @@ class MapPresenter
         throw new Error("Could not find rep for '#{key}'") unless rep.rep and rep.color
       else if @state.has_gold y, x
         rep = { rep: GOLD_REP, color: GOLD_COLOR }
+      else if potion_type = @state.get_potion y, x
+        rep = { rep: POTIONS_REP, color: POTIONS_COLORS[potion_type] }
         
     
     unless rep

@@ -1,7 +1,8 @@
 root = exports ? this
 
 class GameOverPresenter
-  @HIGH_SCORE_COOKIE = "high_score"
+  HIGH_SCORE_COOKIE = "high_score"
+  COOKIE_EXPIRY_DAYS = 365 * 2
   
   constructor: (@parent, @overlay, @game) ->
 
@@ -18,18 +19,18 @@ class GameOverPresenter
     @parent.show()
     @overlay.show()
     
-    prev_high_score = $.cookie GameOverPresenter.HIGH_SCORE_COOKIE
-    prev_high_score ?= 0
-    new_score = player.score
+    prev_high_gold = $.cookie HIGH_SCORE_COOKIE
+    prev_high_gold ?= 0
+    new_gold = player.gold
     
-    if (prev_high_score < new_score)
-      prev_high_score = new_score
-      $.cookie(GameOverPresenter.HIGH_SCORE_COOKIE, new_score, {expires: 365 } )
+    if (prev_high_gold < new_gold)
+      prev_high_gold = new_gold
+      $.cookie HIGH_SCORE_COOKIE, new_gold, {expires: COOKIE_EXPIRY_DAYS }
 
     status = "<div class='title'>REST IN PIECES</div>" +
     "<div class='content'>" +
-    "SCORE: <b>" + new_score + "</b><br/><br/>" +
-    "HIGHSCORE: <b>" + prev_high_score + "</b><br/><br/>" +
+    "GOLD: <b>$#{new_gold}</b><br/><br/>" +
+    "HIGHSCORE: <b>$#{prev_high_gold}</b><br/><br/>" +
     "You were a <b>#{player.race.name} #{player.class.name}</b>.<br /><br />" +
     "Your corpse decorates Floor <b>#{state.floor}</b>.<br /><br />" +
     "You were level <b>#{player.level}</b>.<br />" +

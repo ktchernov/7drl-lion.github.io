@@ -3,60 +3,44 @@
     <title>Dig Deep</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="vendor/jquery.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.string/2.4.0/underscore.string.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.25/howler.min.js"></script>
+    
     <script src="vendor/rot.min.js"></script>
+    
+    <script src="vendor/jquery.miniTip.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="vendor/miniTip.min.css" />
       
     <script src="vendor/audio.min.js"></script>
     <script src="vendor/jsfx.min.js"></script>
     <script src="vendor/jsfxlib.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.25/howler.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/main.css" />
     <script src="js/main.js"></script>
+    
+    <script src="js/music.js"></script>
   </head>
 
   <body>
-    <div id="game"></div>
+    <div class="container">
+      <div id="game"></div>
 
-<audio id="musicAudio" controls="controls" autoplay="autoplay">
-Your browser does not support the HTML5 Audio Tag.
-</audio>
 
-		<script type="text/javascript">
-			jQuery(function($) {
-					var index = 0,
-					mediaPath = 'media/',
-					tracks = [
-						{"track":1, "file":"Rah Rah Rah.mp3"},
-                        {"track":2, "file":"Bonus Life.mp3"},
-					],
-					trackCount = tracks.length,
-					audio = $('#musicAudio').bind('play', function() {
-						playing = true;
-					}).bind('pause', function() {
-						playing = false;
-					}).bind('ended', function() {
-						if((index + 1) < trackCount) {
-							index++;
-							loadTrack(index);
-							audio.play();
-						} else {
-							audio.pause();
-							index = 0;
-							loadTrack(index);
-						}
-                                           }).get(0),
-					loadTrack = function(id) {
-						index = id;
-						audio.src = mediaPath + tracks[id].file;
-					};
-                    loadTrack(index);
-                    audio.volume = 0.6;
-				});
-</script>
+      <div id="music">
+        <audio id="musicAudio" controls="controls">
+        Your browser does not support the HTML5 Audio Tag.
+        </audio>
+        <div id="current">
+          <p>Playing <span id="currentTrack">Nothing</span> by <a id="currentArtist" href="" target="_blank">No One</a></p>
+        </div>
+      </div>
+
+      <div id="credits">
+        <p>By Konstantin Tchernov &copy; 2015-today<br/> Based on "Lyon's Den" by Lion<br/><a href="./credits.html" target="_blank">Credits</a></p>
+      </div>
+    </div>
 
   </body>
 </html>

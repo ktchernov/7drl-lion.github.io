@@ -16,7 +16,7 @@ class Action
   add_geas: (@entity, duration, name) ->
     id = @entity.id
     Geas = get_geas name
-    geas = new Geas duration, id, @state
+    geas = new Geas duration, @entity, @state
     actor = @state.get_actor id
     actor.add_geas geas
 

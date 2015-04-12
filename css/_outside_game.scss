@@ -1,0 +1,52 @@
+body {
+  background-color: whitesmoke;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: $top_margin;
+  margin-bottom: $top_margin;
+  width: $game_width;
+  
+  #music {
+    width: inherit;
+    #musicAudio {
+      width: inherit;
+    }
+  }
+  
+  #current {
+    width: inherit;
+    text-align: center;
+    color: darkblue;
+    font-family: $variable_font_stack;
+    font-size: 90%;
+    padding-left: $wpadding_small;
+    padding-top: $hpadding;
+
+    #currentTrack {
+      font-style: italic;
+      font-weight: bold;
+    }
+
+    #currentArtist {
+    }
+  }
+
+
+  #credits {
+    margin-left: auto;
+    margin-right: auto;
+    width: inherit;
+    position: fixed;
+    bottom: 0;
+    font-family: $variable_font_stack;
+    color: darkblue;
+    font-style: italic;
+    text-align: center;
+    padding-bottom: $hpadding;
+    line-height: 1.5;
+    font-size: 80%;
+  }
+}

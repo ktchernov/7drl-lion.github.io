@@ -42,18 +42,14 @@ class RoguelikeMapGenerator
     return false if check_map x, y
 
 
-#        // NOTE:
-#        // rect-neighbours just denotes neighbours that are either N/W/S/E
-
-
-#      /*
-#       * 1. check for rect-neighbouring doors, if exist => do not place door
-#       * 2. check for pairs rect-opposite blanks, if more than 2 => do not place
-#       * 3. check for diagonal neighbours, if none exist => do not place
-#       * 4. then a random chance of placing a door
-#       * 
-#       * STRONG satisfaction has NO diagonal door neighbours
-#       */
+#         NOTE:
+#         rect-neighbours just denotes neighbours that are either N/W/S/E
+#        1. check for rect-neighbouring doors, if exist => do not place door
+#        2. check for pairs rect-opposite blanks, if more than 2 => do not place
+#        3. check for diagonal neighbours, if none exist => do not place
+#        4. then a random chance of placing a door
+#        
+#        STRONG satisfaction has NO diagonal door neighbours
 
     neighbourBlanks=0 # number of neighbous that are blanks
     pairsOpps = 0 # pairs of rect-opposite blanks
@@ -66,7 +62,7 @@ class RoguelikeMapGenerator
     if(sqr2 == 2 || sqr1 == 2)
       return false
 
-#          // check for blanks on either side
+#           check for blanks on either side
     if( !sqr1 && !sqr2)
       pairsOpps++
       neighbourBlanks+=2
@@ -74,24 +70,24 @@ class RoguelikeMapGenerator
       neighbourBlanks++
 
 
-#        // check north amd spitj squares
+#         check north amd spitj squares
     sqr1 = check_map(x,y-1)
     sqr2 = check_map(x, y+1)
     if(sqr2 == 2 || sqr1 == 2)
       return false
 
-#        // check for blanks on either side
+#         check for blanks on either side
     if( !sqr1 && !sqr2 )
       pairsOpps++
       neighbourBlanks+=2
     else if( !sqr1 || !sqr2 )
       neighbourBlanks++
 
-#          // more than one rect-opposite pair or more than 2 rect-neighbours
+#           more than one rect-opposite pair or more than 2 rect-neighbours
     if( pairsOpps!=1 || neighbourBlanks!=2 )
       return false
 
-#        // now check diagonals
+#         now check diagonals
 
     sqr1 = check_map(x-1,y-1)  # NW
     if( sqr1 == 2)

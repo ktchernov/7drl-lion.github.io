@@ -2,14 +2,6 @@ $.fn.times = (fn) ->
   n = $(@)[0]
   fn(i) for i in [0...n]
 
-$.fn.times_map = (fn) ->
-  result = []
-
-  $(@).times (i) ->
-    result.push fn i
-
-  result
-
 $.fn.random_element = (fn) ->
   ary = $(@)
   idx = ROT.RNG.getUniformInt(0, ary.length - 1)

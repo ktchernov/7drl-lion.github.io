@@ -3,6 +3,7 @@ class Gnome extends Race
   name: 'gnome'
 
   alignments: ['good']
+  rarity: ['trash']
   base_hp: 10
   base_mp: 30
   base_speed: 80

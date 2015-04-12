@@ -4,10 +4,10 @@ class Paladin
 
   genders: ['male', 'female']
   alignments: ['good']
-  races: ['human', 'giant', 'angel', 'elf', 'dwarf']
+  races: ['human', 'giant', 'angel', 'elf', 'dwarf', 'hobbit']
   base_hp: 10
-  base_mp: 0
-  base_speed: -20
+  base_mp: 10
+  base_speed: -30
   base_attack: 4
   base_sight_range: 0
 

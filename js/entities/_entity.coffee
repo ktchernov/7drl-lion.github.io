@@ -27,6 +27,7 @@ class Entity
     @hp = @max_hp
 
     @base_mp = opts.base_mp
+    @base_mp = Math.max 0, @base_mp
     @max_mp = @base_mp
     @mp = @max_mp
 

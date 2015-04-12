@@ -3,12 +3,13 @@ class Hobbit extends Race
   name: 'hobbit'
 
   alignments: ['good']
+  rarity: ['trash']
   base_hp: 10
-  base_mp: 30
-  base_speed: 80
+  base_mp: 20
+  base_speed: 90
   base_attack: 10
   base_sight_range: 8
-  for_player: true
+  for_player: false
 
   skills: []
 

@@ -7,8 +7,8 @@ class Warrior
   races: ['human', 'werewolf', 'dragon', 'giant', 'angel', 'demon', 'catfolk', 'elf', 'dwarf', 'hobbit', 'vampire']
   base_hp: 10
   base_mp: -10
-  base_speed: 5
-  base_attack: 2
+  base_speed: 0
+  base_attack: 5
   base_sight_range: 0
 
   skills: [

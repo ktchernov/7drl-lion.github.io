@@ -6,13 +6,13 @@ class StatusPresenter
     @race = $('<span/>', id: 'race').append ''
     @class = $('<span/>', id: 'class').append 'unknown'
       
-    @score = $("<span/>", id: 'score').html 0
+    @gold = $("<span/>", id: 'gold').html 0
 
-    @parent.append("Lvl ").append(@level).append(" ").append(@race).append(" ").append(@class).append("<br/><br/>SCORE ").append(@score).append("<br/><br/>")
+    @parent.append("Lvl ").append(@level).append(" ").append(@race).append(" ").append(@class).append("<br/><br/>GOLD ").append(@gold).append("<br/><br/>")
 
     @floor = $("<span/>", id: 'floor').html 0
-    @enemies = $("<span/>", id: 'enemies').html 0
-    @parent.append("FLOOR ").append(@floor).append("&nbsp;&nbsp;&nbsp;enemies: ").append(@enemies)
+    @exit_locked = $("<span/>", id: 'exit_locked').html 0
+    @parent.append("FLOOR ").append(@floor).append("&nbsp;&nbsp;&nbsp;").append(@exit_locked)
 
   update: ->
     state = @game.state
@@ -26,8 +26,8 @@ class StatusPresenter
     @class.html player.class.name
 
     @floor.html state.floor
-    @enemies.html state.monster_count()
-    @score.html player.score
+    @exit_locked.html if state.exit_locked then "Exit locked" else "Exit unlocked!"
+    @gold.html "$#{player.gold}"
 
   _nbsp_pad: (str, n) ->
     _.str.rpad(str, n, "&").replace(/&/g, "&nbsp;")

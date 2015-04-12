@@ -19,7 +19,7 @@ class Dig extends Action
     
   _dig_rubble: (i, j) ->
     @_alert_enemies i, j, RUBBLE_SOUND_ALERT_RANGE
-    if ROT.RNG.getPercentage() < RUBBLE_SUCCESS_CHANCE
+    if ROT.RNG.getPercentage() <= RUBBLE_SUCCESS_CHANCE
       @state.msg @id, "You have dug throug the rubble!"
       @state.remove_rubble i, j
       SoundEffects.get().play_dig_rubble()
@@ -30,7 +30,7 @@ class Dig extends Action
       
   _dig_hard_rock: (i, j) ->
     @_alert_enemies i, j, HARD_WALL_ALERT_RANGE
-    if ROT.RNG.getPercentage() < HARD_ROCK_SUCCESS_CHANCE
+    if ROT.RNG.getPercentage() <= HARD_ROCK_SUCCESS_CHANCE
       @state.msg @id, "You chip away at the hard rock wall, cracks are beginning to show!"
       @state.make_rubble i, j
       SoundEffects.get().play_dig_rubble()

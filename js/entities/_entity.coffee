@@ -38,14 +38,17 @@ class Entity
     @_add_skills opts.skills
     
     @surge_grant_chance = opts.surge_grant_chance
-    @kill_score = opts.kill_score
     @kill_xp = opts.kill_xp
     
     @sight_range = opts.sight_range
     
     @get_through_rubble = opts.get_through_rubble
     
-    @score = 0
+    @gold = opts.gold
+    @gold ?= 0
+    
+    @can_pick_up_gold = opts.can_pick_up_gold
+
 
 
   pos: -> [@x, @y]

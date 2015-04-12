@@ -3,6 +3,7 @@ root = exports ? this
 class Map
   constructor: (@width, @height, @num_layers) ->
     @layers = []
+    @items = {}
 
     $(@num_layers).times (n) =>
       @layers[n] = []
@@ -27,7 +28,7 @@ class Map
   get_stack: (i, j) ->
     return [] if @out_of_bounds i, j
 
-    stack = []
+    stack = Array(@num_layers)
     for l in [0..@num_layers-1] by 1
       stack[l] = @get_tile i, j, l
     stack
@@ -58,6 +59,9 @@ class Map
     $(@height).times (i) =>
       $(@width).times (j) =>
         @layers[n][i][j] = null
+        
+  set_item: (i, j, val) ->
+    items[i * @width + j] = val
 
   out_of_bounds: (i, j, n) ->
     bad_i = (i and i < 0 or i >= @height)

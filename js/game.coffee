@@ -1,8 +1,6 @@
 root = exports ? this
 
 class Game
-  @KILL_ALL_SCORE: 100
-  @DESCEND_LEVEL_SCORE: 100
   
   constructor: () ->
     @state = new GameState 80, 24
@@ -82,9 +80,8 @@ class Game
     @state.add_entrance i, j
     @state.set_pos @player_id, i, j
 
-    $(15).times => @_generate_trash()
-    $(5).times => @_generate_uncommon()
-    $(1).times => @_generate_boss()
+    @_generate_enemies()
+    @_generate_gold()
 
     [i, j] = @state.random_empty_space()
     @state.add_exit i, j
@@ -93,13 +90,36 @@ class Game
         if @state.exit_locked
           @state.msg @player_id, 'The exit is locked. You must find and defeat the boss of this level to proceed.'
         else
-          @_grant_score Game.DESCEND_LEVEL_SCORE
           SoundEffects.get().play_descend()
           @new_floor()
 
     @map_ready = true
     @update()
+    
+  _generate_gold: ->
+    NUM_PILES_MEAN = 4
+    NUM_PILES_STDDEV = 1.5
+    GOLD_AMOUNT_BASE_MEAN = 50
+    
+    num_gold = RNG.clampedNormal NUM_PILES_MEAN, NUM_PILES_STDDEV
+    
+    gold_amount_mean = GOLD_AMOUNT_BASE_MEAN
+    gold_amount_mean += gold_amount_mean * (@state.floor - 1) * 0.2
+    gold_amount_stddev = gold_amount_mean / 3
+    
+    $(num_gold).times =>
+      [i, j] = @state.random_empty_space()
+      gold_amount = RNG.clampedNormal gold_amount_mean, gold_amount_stddev
+      @state.put_gold i, j, gold_amount
 
+  _generate_enemies: ->
+    num_trash = RNG.clampedNormal 15, 1
+    num_uncommon = RNG.clampedNormal 5, 1
+    
+    $(num_trash).times => @_generate_trash()
+    $(num_uncommon).times => @_generate_uncommon()
+    @_generate_boss()
+    
   _generate_trash: ->
     monster_entity = @state.generate_monster 'trash'
     @_make_actor monster_entity, =>
@@ -135,7 +155,7 @@ class Game
     
   _grant_kill_bonuses: (monster_entity) ->
       @_surge monster_entity.surge_grant_chance
-      @_grant_score monster_entity.kill_score
+      @_grant_gold monster_entity.gold
       @_grant_xp monster_entity.kill_xp
       @_check_full_surge()
 
@@ -171,7 +191,6 @@ class Game
     @_full_surge() if @state.monster_count() == 0
 
   _full_surge: ->
-    @_grant_score(Game.KILL_ALL_SCORE)
     @state.restore_hp @player_id, @state.get_max_hp @player_id
     @state.restore_mp @player_id, @state.get_max_mp @player_id
     @state.msg @player_id, 'With all the enemies vanquished, you are able to rest. Health and magic restored.'
@@ -187,11 +206,11 @@ class Game
   _grant_xp: (xp) ->
     @state.grant_xp @player_id, xp
     
-  _grant_score: (score) ->
-    @state.grant_score @player_id, score
+  _grant_gold: (gold) ->
+    @state.grant_gold @player_id, gold
 
-  _make_actor: (entity, cb) ->
-    cb ?= ->
+  _make_actor: (entity, kill_callback) ->
+    kill_callback ?= ->
 
     AggressiveMob = get_actor 'aggressive'
     monster_actor = new AggressiveMob entity, @scheduler, @engine, @state
@@ -202,7 +221,7 @@ class Game
       @scheduler.remove monster_actor
       @state.unregister_actor entity.id
       
-      cb()
+      kill_callback()
 
 
 root.Game = Game

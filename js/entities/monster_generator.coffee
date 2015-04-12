@@ -25,6 +25,22 @@ class MonsterGenerator extends EntityGenerator
       when 'trash' then 0.06
       when 'uncommon' then 0.2
       when 'rare' then 0.6
+      
+    gold_mean = switch rarity
+      when 'trash' then 0
+      when 'uncommon' then 20
+      when 'rare' then 100
+    
+    gold = 0
+    if gold_mean
+      gold_mean += gold_mean * (floor - 1) * 0.2
+      gold_stddev = gold_mean / 5
+      gold = RNG.clampedNormal gold_mean, gold_stddev
+      
+    can_pick_up_gold = switch rarity
+      when 'trash' then 0
+      when 'uncommon' then true
+      when 'rare' then true
 
     base_attack = gender.base_attack + race.base_attack + klass.base_attack
     base_attack = Math.ceil(base_attack * scaling_factor)
@@ -57,9 +73,10 @@ class MonsterGenerator extends EntityGenerator
       rarity: rarity
       skills: [skill]
       surge_grant_chance: surge_grant_chance
-      kill_score: scaling_factor * 100
+      gold: gold
       kill_xp: kill_xp
       get_through_rubble: race.can_get_through_rubble
       sight_range: sight_range
+      can_pick_up_gold: can_pick_up_gold
 
 root.MonsterGenerator = MonsterGenerator

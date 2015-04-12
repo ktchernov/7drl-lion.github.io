@@ -4,6 +4,7 @@ TRIGGERS = 0
 FLOORS = 1
 WALLS = 2
 CREATURES = 3
+NUM_LAYERS = 4
 
 MAX_OUTPUT_LENGTH = 7
 
@@ -13,7 +14,7 @@ REVERSE = { n: 's', ne: 'sw', e: 'w', se: 'nw', s: 'n', sw: 'ne', w: 'e', nw: 's
 
 class GameState
   constructor: (@map_width, @map_height) ->
-    @_map = new Map @map_width, @map_height, 4
+    @_map = new Map @map_width, @map_height, NUM_LAYERS
     @floor = 0
 
     @_player_generator = new PlayerGenerator()
@@ -29,6 +30,8 @@ class GameState
     @actors = {}
     
     @_player_fov_map = {}
+    
+    @_gold_map = {}
 
   # GENERATORS
 
@@ -51,7 +54,11 @@ class GameState
 
     @_cave_generator.run (i, j, layer, type) =>
       @_map.set_tile i, j, layer, type
-
+      
+      
+  generate_items: ->
+    
+  
   # CLEARING
 
   next_floor: ->
@@ -59,6 +66,7 @@ class GameState
 
   clear_map: ->
     @_map.clear()
+    @_gold_map = {}
 
   clear_monsters: ->
     @each_monster (id) =>
@@ -361,22 +369,32 @@ class GameState
       if id == @player_id
         SoundEffects.get().play_level_up();
       
-  grant_score: (id, amount) ->
+  grant_gold: (id, amount) ->
     entity = @_entities[id]
-    if entity
-      entity.score += amount
+    if entity and amount
+      entity.gold += amount
+      if id == @player_id
+        @msg id, "You collect $#{amount} worth of gold!"
+        SoundEffects.get().play_coin()
       
   get_player_sight_range: ->
     @_player.sight_range
       
-  remove_rubble: (x, y) ->
-    if @is_rubble x, y
-      @_map.clear_tile x, y, WALLS
-      @_map.set_tile x, y, FLOORS, "floor"
+  remove_rubble: (i, j) ->
+    GOLD_CHANCE = 5
+    GOLD_MEAN = 10 + 10 * (@floor - 1) * 0.2
+    GOLD_STDDEV = GOLD_MEAN / 4
+    
+    if @is_rubble i, j
+      @_map.clear_tile i, j, WALLS
+      @_map.set_tile i, j, FLOORS, "floor"
+      if ROT.RNG.getPercentage() <= GOLD_CHANCE
+        amount = RNG.clampedNormal GOLD_MEAN, GOLD_STDDEV
+        @put_gold i, j, amount
       
-  make_rubble: (x, y) ->
-    if @is_wall x, y
-      @_map.set_tile x, y, WALLS, "rubble"
+  make_rubble: (i, j) ->
+    if @is_wall i, j
+      @_map.set_tile i, j, WALLS, "rubble"
       
   clear_player_fov_map: ->
     @_player_fov_map = {}
@@ -387,6 +405,30 @@ class GameState
   is_visible_to_player: (i, j) ->
     @_player_fov_map[i*@map_width + j]
     
+  put_gold: (i, j, gold_amount) ->
+    if gold_amount
+      key = @_gold_key(i, j)
+      @_gold_map[key] ?= 0
+      @_gold_map[key] += gold_amount
+    
+  pickup_gold: (i, j, entity_id) ->
+    entity = @_entities[entity_id]
+    if entity
+      key = @_gold_key(i, j)
+      gold = @_gold_map[key]
+      entity.gold += gold
+      delete @_gold_map[key]
+
+      if entity_id == @player_id
+        @msg entity_id, "You pick up $#{gold} worth of gold!"
+        SoundEffects.get().play_coin()
+    
+  has_gold: (i, j) ->
+    key = @_gold_key(i, j)
+    key of @_gold_map
+    
+  _gold_key: (i, j) ->
+    i * @map_width + j
 
   # PRIVATE
 

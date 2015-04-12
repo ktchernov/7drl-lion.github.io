@@ -34,6 +34,11 @@ CREATURE_COLORS =
   uncommon: [80, 50, 255]
   rare: [255, 0, 0]
   
+  
+GOLD_REP = '$'
+
+GOLD_COLOR = [255,223,0]
+  
 DISPLAY_ALL = false # debug flag to show full map
 
 class MapPresenter
@@ -113,7 +118,7 @@ class MapPresenter
     if DISPLAY_ALL
       for y in [0..height-1] by 1
         for x in [0..width-1] by 1
-          r = @convert @state.get_data(y, x)
+          r = @_generate_rep x, y
           base_color = r.color
           light = ambient_light
 
@@ -133,7 +138,7 @@ class MapPresenter
         x = posIx % width
         y = (posIx - x) / width
 
-        r = @convert @state.get_data(y, x), true
+        r = @_generate_rep x, y, {prev_seen: true}
         base_color = r.color
         final_color = ROT.Color.multiply base_color, prev_seen_light
         @display.draw x,  y, r.rep, ROT.Color.toRGB final_color
@@ -145,7 +150,7 @@ class MapPresenter
       x = posIx % width
       y = (posIx - x) / width
       
-      r = @convert @state.get_data(y, x)
+      r = @_generate_rep x, y
       base_color = r.color
       light = ambient_light
 
@@ -158,24 +163,31 @@ class MapPresenter
         
 
         
-  convert: (stack, no_creatures) ->
-    rep = FLOOR_REPS['empty']
+  _generate_rep: (x, y, opts) ->
+    stack = @state.get_data y, x
+    
+    rep = null
 
-    if stack[FLOORS]
-      rep = FLOOR_REPS[stack[FLOORS]]
-      throw new Error("Could not find rep for '#{stack[FLOORS]}'") unless rep
-
-    if stack[WALLS]
-      rep = WALL_REPS[stack[WALLS]]
-      throw new Error("Could not find rep for '#{stack[WALLS]}'") unless rep
-
-    unless no_creatures
+    unless opts and opts.prev_seen
       if stack[CREATURES]
         entity = stack[CREATURES]
         is_player = entity.id == @state.player_id
         key = if is_player then 'player' else entity.race.key
         rep = { rep: CREATURE_REPS[key], color: CREATURE_COLORS[entity.rarity] }
         throw new Error("Could not find rep for '#{key}'") unless rep.rep and rep.color
+      else if @state.has_gold y, x
+        rep = { rep: GOLD_REP, color: GOLD_COLOR }
+        
+    
+    unless rep
+      if stack[WALLS]
+        rep = WALL_REPS[stack[WALLS]]
+        throw new Error("Could not find rep for '#{stack[WALLS]}'") unless rep
+      else if stack[FLOORS]
+        rep = FLOOR_REPS[stack[FLOORS]]
+        throw new Error("Could not find rep for '#{stack[FLOORS]}'") unless rep
+      else
+        rep = FLOOR_REPS['empty']
 
     rep
 

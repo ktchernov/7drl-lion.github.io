@@ -16,6 +16,11 @@
       padding: $hpadding_small $wpadding;
     }
     
+    .newestEntry {
+      @extend .entry;
+      color: $fg_brighter_color;
+    }
+        
     .oldEntry {
       @extend .entry;
       color: $fg_faded_color;

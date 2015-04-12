@@ -17,7 +17,13 @@ class OutputPresenter
 
     for i in [output.length-1..0] by -1
       entry = output[i]
-      clazz = if cur_turn == entry.turn_count then 'entry' else 'oldEntry'
+      clazz = 'entry'
+      if cur_turn == entry.turn_count
+        if i == output.length-1
+          clazz = 'newestEntry'
+      else
+        clazz = 'oldEntry'
+      
       @parent.append $('<div/>', class: clazz).html entry.message
 
 root.OutputPresenter = OutputPresenter

@@ -2,6 +2,8 @@
 
 #= require keyboard.coffee
 
+#= require rng.coffee
+
 #= require_tree alignments
 #= require_tree genders
 #= require_tree races

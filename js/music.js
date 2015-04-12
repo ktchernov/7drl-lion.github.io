@@ -20,7 +20,7 @@ jQuery(function($) {
     playing = false;
     $.cookie(PAUSE_COOKIE, 'true', {expiry: COOKIE_EXPIRY_DAYS} );
   }).bind('ended', function() {
-    var prevIndex = 0;
+    var prevIndex = index;
     index = ROT.RNG.getUniformInt(0, tracks.length - 1);
     if (index == prevIndex) {
       index = (index + 1) % trackCount;

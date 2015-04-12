@@ -53,6 +53,44 @@ table {
   border-collapse: collapse;
   border-spacing: 0; }
 
+body {
+  background-color: whitesmoke; }
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 940px; }
+  .container #music {
+    width: inherit; }
+    .container #music #musicAudio {
+      width: inherit; }
+  .container #current {
+    width: inherit;
+    text-align: center;
+    color: darkblue;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    font-size: 90%;
+    padding-left: 5px;
+    padding-top: 7px; }
+    .container #current #currentTrack {
+      font-style: italic;
+      font-weight: bold; }
+  .container #credits {
+    margin-left: auto;
+    margin-right: auto;
+    width: inherit;
+    position: fixed;
+    bottom: 0;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    color: darkblue;
+    font-style: italic;
+    text-align: center;
+    padding-bottom: 7px;
+    line-height: 1.5;
+    font-size: 80%; }
+
 #game {
   background-color: #000000;
   border: 1px solid #009900;
@@ -131,9 +169,10 @@ table {
   top: 0px;
   right: 0px;
   font-size: 110%; }
-  #game .status #score {
+  #game .status #gold {
     font-weight: bolder;
-    color: coral; }
+    font-size: 120%;
+    color: goldenrod; }
 
 #game .help {
   border-left: 1px solid #009900;
@@ -185,8 +224,10 @@ table {
     overflow: hidden;
     padding: 7px 0px;
     width: 700px; }
-    #game .output .content .entry, #game .output .content .oldEntry {
+    #game .output .content .entry, #game .output .content .newestEntry, #game .output .content .oldEntry {
       padding: 2px 10px; }
+    #game .output .content .newestEntry {
+      color: #00DD00; }
     #game .output .content .oldEntry {
       color: #005000; }
 

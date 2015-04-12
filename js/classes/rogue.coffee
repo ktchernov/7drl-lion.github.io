@@ -8,7 +8,7 @@ class Rogue
   base_hp: -5
   base_mp: -10
   base_speed: 75
-  base_attack: 5
+  base_attack: 0
   base_sight_range: 0
 
   skills: [

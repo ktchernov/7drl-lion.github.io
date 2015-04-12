@@ -3,13 +3,14 @@ class Dwarf extends Race
   name: 'dwarf'
 
   alignments: ['good']
+  rarity: ['uncommon', 'trash']
   base_hp: 15
   base_mp: 30
   base_speed: 80
-  base_attack: 10
+  base_attack: 12
   base_sight_range: 8
   
-  for_player: false
+  for_player: true
 
   skills: []
 

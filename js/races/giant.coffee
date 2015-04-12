@@ -3,10 +3,11 @@ class Giant extends Race
   name: 'giant'
 
   alignments: ['good', 'neutral']
+  rarity: ['uncommon', 'rare']
   base_hp: 30
-  base_mp: 10
-  base_speed: 130
-  base_attack: 11
+  base_mp: 5
+  base_speed: 70
+  base_attack: 20
   base_sight_range: 6
   
   for_player: true

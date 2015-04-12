@@ -3,6 +3,7 @@ class Human extends Race
   name: 'human'
 
   alignments: ['good', 'neutral', 'evil']
+  rarity: ['trash', 'uncommon']
   base_hp: 20
   base_mp: 20
   base_speed: 100

@@ -100,7 +100,7 @@ class Game
   _generate_gold: ->
     NUM_PILES_MEAN = 4
     NUM_PILES_STDDEV = 1.5
-    GOLD_AMOUNT_BASE_MEAN = 50
+    GOLD_AMOUNT_BASE_MEAN = 40
     
     num_gold = RNG.clampedNormal NUM_PILES_MEAN, NUM_PILES_STDDEV
     
@@ -122,12 +122,12 @@ class Game
     
     $(num_potions).times =>
       [i, j] = @state.random_empty_space()
-      type  = if ROT.RNG.getPercentage() <= 70 then 'hp' else 'mp'
+      type  = if ROT.RNG.getPercentage() <= HP_POTION_CHANCE then 'hp' else 'mp'
       @state.put_potion i, j, type
 
   _generate_enemies: ->
-    num_trash = RNG.clampedNormal 15, 1
-    num_uncommon = RNG.clampedNormal 5, 1
+    num_trash = RNG.clampedNormal 10, 1
+    num_uncommon = RNG.clampedNormal 4, 1
     
     $(num_trash).times => @_generate_trash()
     $(num_uncommon).times => @_generate_uncommon()
@@ -191,13 +191,12 @@ class Game
     @state.give_skill @player_id, new_skill
 
   _surge: (chance) ->
-    return unless Math.random() < chance
+    return unless ROT.RNG.getPercentage() <= chance 
 
-    r = Math.random()
-    if r < 0.4 then @_health_surge()
-    else if r < 0.8 then @_magic_surge()
-    else
+    r = ROT.RNG.getPercentage()
+    if r <= 50
       @_health_surge()
+    else 
       @_magic_surge()
 
   _check_full_surge: ->
@@ -209,12 +208,19 @@ class Game
     @state.msg @player_id, 'With all the enemies vanquished, you are able to rest. Health and magic restored.'
 
   _health_surge: ->
-    @state.restore_hp @player_id, 10
-    @state.msg @player_id, 'You feel a surge of healing energy.'
+    HEALTH_SURGE_MEAN = 10
+    HEALTH_SURGE_MEAN += HEALTH_SURGE_MEAN * (@state.floor - 1) * 0.1
+    HEALTH_SURGE_STDDEV = HEALTH_SURGE_MEAN / 4
+    amount = RNG.clampedNormal HEALTH_SURGE_MEAN, HEALTH_SURGE_STDDEV
+    
+    @state.restore_hp @player_id, amount
 
   _magic_surge: ->
-    @state.restore_mp @player_id, 10
-    @state.msg @player_id, 'You feel a surge of magic energy.'
+    MP_SURGE_MEAN = 6
+    MP_SURGE_MEAN += MP_SURGE_MEAN * (@state.floor - 1) * 0.1
+    MP_SURGE_STDDEV = MP_SURGE_MEAN / 4
+    amount = RNG.clampedNormal MP_SURGE_MEAN, MP_SURGE_STDDEV
+    @state.restore_mp @player_id, amount
 
   _grant_xp: (xp) ->
     @state.grant_xp @player_id, xp

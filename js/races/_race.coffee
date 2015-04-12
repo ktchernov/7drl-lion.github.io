@@ -16,6 +16,9 @@ list_races = (options) ->
   if options.player
     _.filter races, (race) ->
       race.for_player
+  else if options.rarity
+    _.filter races, (race) ->
+      _.contains race.rarity, options.rarity
   else
     races
 

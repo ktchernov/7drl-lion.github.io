@@ -7,6 +7,8 @@
   @include dim($w, $h);
   @include center($w, $h, $game_width, $game_height);
   z-index: 100;
+  font-size: 110%;
+  line-height: 1.2;
 
   .title {
     border-bottom: 1px solid $fg_color;

@@ -2,24 +2,23 @@ root = exports ? this
 
 class MonsterGenerator extends EntityGenerator
   generate: (rarity, floor) ->
-    alignment = $(list_alignments()).random_element()
     gender = $(list_genders()).random_element()
-    race = $(list_races_for_alignment(alignment.key)).random_element()
-    klass = $(list_classes_for_alignment_and_race(alignment.key, race.key)).random_element()
+    race = $(list_races {rarity: rarity} ).random_element()
+    klass = $(list_classes_for_race race.key).random_element()
           
-    throw new Error "No class for #{alignment.key} #{race.key}" if !klass
+    throw new Error "No class for #{race.key}" if !klass
 
     scaling_factor = switch rarity
-      when 'trash' then 0.1
-      when 'uncommon' then 0.2
-      when 'rare' then 0.5
+      when 'trash' then 0.15
+      when 'uncommon' then 0.3
+      when 'rare' then 0.6
 
     scaling_factor += scaling_factor * (floor - 1) * 0.2
     
     surge_grant_chance = switch rarity
-      when 'trash' then 0.12
-      when 'uncommon' then 0.4
-      when 'rare' then 1
+      when 'trash' then 0
+      when 'uncommon' then 20
+      when 'rare' then 100
       
     kill_xp = switch rarity
       when 'trash' then 0.06

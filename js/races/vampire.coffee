@@ -3,9 +3,10 @@ class Vampire extends Race
   name: 'vampire'
 
   alignments: ['evil']
+  rarity: ['uncommon', 'rare']
   base_hp: 15
   base_mp: 15
-  base_speed: 100
+  base_speed: 120
   base_attack: 15
   base_sight_range: 10
   for_player: false

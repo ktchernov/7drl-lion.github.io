@@ -3,13 +3,14 @@ class Dragon extends Race
   name: 'dragon'
 
   alignments: ['good', 'neutral', 'evil']
-  base_hp: 40
+  rarity: ['uncommon', 'rare']
+  base_hp: 30
   base_mp: 20
-  base_speed: 175
+  base_speed: 130
   base_attack: 15
   base_sight_range: 10
   
-  for_player: true
+  for_player: false
 
   skills: []
 

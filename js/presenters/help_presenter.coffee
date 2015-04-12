@@ -15,9 +15,10 @@ class HelpPresenter
       "Skills: <b>1-9</b> and <b>0</b><br />" +
       "<br />" +
       "GOALS:<br />" +
-      "&nbsp;&nbsp;* <b>kill the boss</b> to proceed<br />" +
-      "&nbsp;&nbsp;&nbsp;&nbsp;and <b>learn skills</b><br />" +
+      "&nbsp;&nbsp;* collect <b>gold</b><br />" +
+      "&nbsp;&nbsp;* <b>kill the boss</b> to go down<br />" +
+      "&nbsp;&nbsp;* use your <b>skills</b><br />" +
       "&nbsp;&nbsp;* enemies may grant <b>healing</b><br />" +
-      "&nbsp;&nbsp;* clear level for <b>full heal</b>"
+      "&nbsp;&nbsp;* kill all enemies for a <b>full heal</b><br />"
 
 root.HelpPresenter = HelpPresenter

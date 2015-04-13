@@ -174,7 +174,7 @@ body {
   #game .status #gold {
     font-weight: bolder;
     font-size: 120%;
-    color: goldenrod; }
+    color: gold; }
 
 #game .help {
   border-left: 1px solid #009900;
@@ -233,7 +233,7 @@ body {
     #game .output .content .oldEntry {
       color: #005000; }
 
-#game_over {
+#game_over, #intro {
   border: 1px solid #009900;
   font-size: 120%;
   background-color: #000000;
@@ -243,17 +243,18 @@ body {
   position: absolute;
   top: 110px;
   z-index: 100; }
-  #game_over .title {
+  #game_over .title, #intro .title {
+    text-align: center;
     border-bottom: 1px solid #009900;
     background-color: #666666;
     color: #66ff66;
     padding: 7px 10px; }
-  #game_over .content {
+  #game_over .content, #intro .content {
     padding: 7px 10px; }
-    #game_over .content b {
+    #game_over .content b, #intro .content b {
       color: #66ff66; }
 
-#game_over_overlay {
+#game_over_overlay, #intro_overlay {
   width: 940px;
   height: 470px;
   background-color: #666666;
@@ -264,3 +265,8 @@ body {
   opacity: 0.3;
   position: absolute;
   z-index: 99; }
+
+#intro .content b.gold {
+  color: gold; }
+#intro .content p {
+  padding-bottom: 7px; }

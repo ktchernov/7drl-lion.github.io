@@ -1,6 +1,8 @@
 Dig Deep - Roguelike game
 =========================
 
+Visit https://ktchernov.github.io/Dig-Deep-RL/ to play!
+
 Simple: dig as deep as you can and collect as much gold as you can without getting killed!
 
 Based on a 7-day Roguelike "Lyon's Den". Written for GitHub Game Off 2015 "The Game Has Changed" - https://github.com/blog/1972-the-game-has-changed

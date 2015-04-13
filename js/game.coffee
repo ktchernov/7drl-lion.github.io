@@ -18,6 +18,14 @@ class Game
       @player_actor.on_key args...
 
   start: ->
+    @show_intro()
+    
+  show_intro: ->
+    @should_show_intro = true
+    @update()
+    
+  hide_intro: ->
+    @should_show_intro = false
     @prompt_character()
 
   prompt_character: ->

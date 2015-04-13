@@ -10,6 +10,7 @@
   z-index: 100;
 
   .title {
+    text-align: center;
     border-bottom: 1px solid $fg_color;
     background-color: $bg_hi_color;
     color: $fg_hi_color;
@@ -34,4 +35,23 @@
   @include hp-opacity(0.3);
   position: absolute;
   z-index: 99;
+}
+
+
+#intro {
+  @extend #game_over;
+    
+  .content {
+    b.gold {
+      color: gold;
+    }
+    
+    p {
+      padding-bottom: $hpadding;
+    }
+  }
+}
+
+#intro_overlay {
+  @extend #game_over_overlay
 }

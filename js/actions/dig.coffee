@@ -20,7 +20,7 @@ class Dig extends Action
   _dig_rubble: (i, j) ->
     @_alert_enemies i, j, RUBBLE_SOUND_ALERT_RANGE
     if ROT.RNG.getPercentage() <= RUBBLE_SUCCESS_CHANCE
-      @state.msg @id, "You have dug throug the rubble!"
+      @state.msg @id, "You have dug through the rubble!"
       @state.remove_rubble i, j
       SoundEffects.get().play_dig_rubble()
     else
